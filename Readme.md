@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ibrohim Alimuhammedov](https://up.htmlacademy.ru/react/5/user/989547).
-* Наставник: `Неизвестно`.
+* Наставник: `Евгений Фаллер`.
 
 ---
 
