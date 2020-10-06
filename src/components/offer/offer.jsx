@@ -68,7 +68,7 @@ const Offer = () => {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style="width: 80%"></span>
+                  <span style={{width: `80%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">4.8</span>
@@ -157,7 +157,7 @@ const Offer = () => {
                     <div className="reviews__info">
                       <div className="reviews__rating rating">
                         <div className="reviews__stars rating__stars">
-                          <span style="width: 80%"></span>
+                          <span style={{width: `80%`}}></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -233,7 +233,7 @@ const Offer = () => {
                   <div className="place-card__price-wrapper">
                     <div className="place-card__price">
                       <b className="place-card__price-value">&euro;80</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
+                      <span className="place-card__price-text">/&nbsp;night</span>
                     </div>
                     <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
                       <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -244,7 +244,7 @@ const Offer = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 80%"></span>
+                      <span style={{width: `80%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -265,7 +265,7 @@ const Offer = () => {
                   <div className="place-card__price-wrapper">
                     <div className="place-card__price">
                       <b className="place-card__price-value">&euro;132</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
+                      <span className="place-card__price-text">/;&nbsp;night</span>
                     </div>
                     <button className="place-card__bookmark-button button" type="button">
                       <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -276,7 +276,7 @@ const Offer = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 80%"></span>
+                      <span style={{width: `80%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -297,7 +297,7 @@ const Offer = () => {
                   <div className="place-card__price-wrapper">
                     <div className="place-card__price">
                       <b className="place-card__price-value">&euro;180</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
+                      <span className="place-card__price-text">/&nbsp;night</span>
                     </div>
                     <button className="place-card__bookmark-button button" type="button">
                       <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -308,7 +308,7 @@ const Offer = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 100%"></span>
+                      <span style={{width: `100%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
