@@ -21,7 +21,7 @@ const App = (props) => {
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route path="/offer/:id" exact component={Offer} />
+        <Route path="/offer/:id?" exact component={Offer} />
       </Switch>
     </BrowserRouter>
   );
