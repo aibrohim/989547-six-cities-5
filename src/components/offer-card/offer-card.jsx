@@ -1,9 +1,11 @@
 import React from "react";
+import {Link} from "react-router-dom";
+import propTypes from "prop-types";
 
-const SmallOffer = ({offer}) => {
-  const {isPremium, images, cost, isFavorite, rate, title, type} = offer;
+const OfferCard = ({offer, onHover}) => {
+  const {id, isPremium, images, cost, isFavorite, rate, title, type} = offer;
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseOver={() => onHover(offer)}>
       {
         isPremium
           ? <div className="place-card__mark">
@@ -12,9 +14,12 @@ const SmallOffer = ({offer}) => {
           : ``
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={{
+          pathname: `/offer/${id}`,
+          offer
+        }}>
           <img className="place-card__image" src={images[0].url} width="260" height="200" alt={images[0].description} />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -40,7 +45,10 @@ const SmallOffer = ({offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={{
+            pathname: `/offer/${id}`,
+            offer
+          }}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -48,4 +56,21 @@ const SmallOffer = ({offer}) => {
   );
 };
 
-export default SmallOffer;
+OfferCard.propTypes = {
+  offer: propTypes.shape({
+    id: propTypes.number.isRequired,
+    isPremium: propTypes.bool.isRequired,
+    images: propTypes.arrayOf(propTypes.shape({
+      url: propTypes.string.isRequired,
+      description: propTypes.string.isRequired
+    })),
+    cost: propTypes.number.isRequired,
+    isFavorite: propTypes.bool.isRequired,
+    rate: propTypes.number.isRequired,
+    type: propTypes.string.isRequired,
+    title: propTypes.string.isRequired
+  }),
+  onHover: propTypes.func,
+};
+
+export default OfferCard;

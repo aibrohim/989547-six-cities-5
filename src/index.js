@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDom from "react-dom";
 import App from "./components/app/app";
-import Offers from "./components/mocks/offers.js";
+import Offers from "./mocks/offers.js";
 
 const Settings = {
   RENTING_OFFERS_COUNT: 99

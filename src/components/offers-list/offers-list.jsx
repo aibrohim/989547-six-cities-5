@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import SmallOffer from "../offer-card/offer-card";
+import OfferCard from "../offer-card/offer-card";
 
 class OffersList extends PureComponent {
   constructor(props) {
@@ -11,7 +11,6 @@ class OffersList extends PureComponent {
   }
 
   setActiveOffer(offer) {
-    console.log(offer);
     this.setState({
       activeOffer: offer
     });
@@ -21,10 +20,10 @@ class OffersList extends PureComponent {
     const {offers} = this.props;
     return (
       <div className="cities__places-list places__list tabs__content">
-        {offers.map((offer, index) =>
-          <SmallOffer
+        {offers.map((offer) =>
+          <OfferCard
             offer={offer}
-            key={index}
+            key={offer.id}
             onHover={() => this.setActiveOffer(offer)}
           />
         )}
