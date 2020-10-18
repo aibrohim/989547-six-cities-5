@@ -47,7 +47,8 @@ const getRandomCity = () => {
 const image = () => {
   return {
     url: `${IMG_URL}260/200?r=${Math.random()}`,
-    description: `photo studio`
+    description: `photo studio`,
+    id: new Date() + parseInt(Math.random() * 1000, 10)
   };
 };
 
@@ -64,7 +65,8 @@ const generateComment = () => {
     name: getName,
     date: new Date(),
     rate: Number(getRandomInteger(MIN_RATE_COUNT, MAX_RATE_COUNT)),
-    review: INFO[getRandomInteger(0, INFO.length - 1)]
+    review: INFO[getRandomInteger(0, INFO.length - 1)],
+    id: new Date() + parseInt(Math.random() * 1000, 10)
   };
 };
 
