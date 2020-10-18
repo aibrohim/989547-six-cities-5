@@ -10,6 +10,25 @@ const MAX_RATE_COUNT = 5;
 const MIN_ADULTS_COUNT = 1;
 const MAX_ADULTS_COUNT = 8;
 
+export let COORDS = [
+  [
+    52.3909553943508,
+    4.85309666406198
+  ],
+  [
+    52.369553943508,
+    4.85309666406198
+  ],
+  [
+    52.3909553943508,
+    4.929309666406198,
+  ],
+  [
+    52.3809553943508,
+    4.939309666406198
+  ]
+];
+
 const getRandomTitle = () => {
   const getIndex = getRandomInteger(0, TITLES.length - 1);
   return TITLES[getIndex];
@@ -53,6 +72,18 @@ const generateComments = () => {
   return new Array(getRandomInteger(1, 6)).fill().map(generateComment);
 };
 
+const generateCoordinates = () => {
+  const randomIndex = getRandomInteger(0, COORDS.length - 1);
+  const randomCoord = COORDS[randomIndex];
+
+  COORDS = [
+    ...COORDS.slice(0, randomIndex),
+    ...COORDS.slice(randomIndex + 1)
+  ];
+
+  return randomCoord;
+};
+
 const getOffer = () => {
   return {
     id: Date.now() + parseInt(Math.random() * 1000, 10),
@@ -67,6 +98,7 @@ const getOffer = () => {
     cost: Number(getRandomInteger(40, 300)),
     inside: getRandomElementsArray(FEATURES),
     info: getRandomElementsArray(INFO),
+    coords: generateCoordinates(),
     host: {
       avatar: `${AVATAR_URL}74`,
       name: NAMES[getRandomInteger(0, NAMES.length - 1)],
@@ -77,7 +109,7 @@ const getOffer = () => {
 };
 
 const getOffers = () => {
-  return new Array(6).fill().map(getOffer);
+  return new Array(4).fill().map(getOffer);
 };
 
 export default getOffers();

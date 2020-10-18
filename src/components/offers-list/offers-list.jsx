@@ -18,6 +18,7 @@ class OffersList extends PureComponent {
 
   render() {
     const {offers} = this.props;
+
     return (
       <div className="cities__places-list places__list tabs__content">
         {offers.map((offer) =>
