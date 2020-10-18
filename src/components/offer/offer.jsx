@@ -37,8 +37,8 @@ const Offer = (props) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) => {
-                return (<div key={index} className="property__image-wrapper">
+              {images.map((image) => {
+                return (<div key={image.id} className="property__image-wrapper">
                   <img className="property__image" src={image.url} alt={image.description} />
                 </div>);
               })}
@@ -121,9 +121,9 @@ const Offer = (props) => {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                 <ul className="reviews__list">
-                  {comments.map((comment, index) => {
+                  {comments.map((comment) => {
                     return (
-                      <li key={index} className="reviews__item">
+                      <li key={comment.id} className="reviews__item">
                         <div className="reviews__user user">
                           <div className="reviews__avatar-wrapper user__avatar-wrapper">
                             <img className="reviews__avatar user__avatar" src={comment.avatar} width="54" height="54" alt="Reviews avatar" />

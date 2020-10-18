@@ -14,9 +14,13 @@
     "@babel/preset-env": "7.8.7",
     "@babel/preset-react": "7.8.3",
     "babel-loader": "8.1.0",
+    "css-loader": "5.0.0",
     "eslint": "^5.13.0",
     "eslint-config-htmlacademy": "^0.5.2",
     "eslint-plugin-react": "^7.21.3",
+    "file-loader": "6.1.1",
+    "img-loader": "3.0.2",
+    "style-loader": "2.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
@@ -25,6 +29,7 @@
     "node": "10"
   },
   "dependencies": {
+    "leaflet": "1.7.1",
     "prop-types": "15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",

@@ -4,8 +4,9 @@ import propTypes from "prop-types";
 
 const OfferCard = ({offer, onHover}) => {
   const {id, isPremium, images, cost, isFavorite, rate, title, type} = offer;
+  const onMouseOver = () => onHover(offer);
   return (
-    <article className="cities__place-card place-card" onMouseOver={() => onHover(offer)}>
+    <article className="cities__place-card place-card" onMouseOver={onMouseOver}>
       {
         isPremium
           ? <div className="place-card__mark">
