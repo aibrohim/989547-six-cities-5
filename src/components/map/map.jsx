@@ -18,6 +18,10 @@ class Map extends React.PureComponent {
     super(props);
 
     this.offers = props.offers;
+    this.styles = Object.assign(
+        props.styles,
+        {height: `100%`}
+    );
   }
 
   componentDidMount() {
@@ -49,7 +53,7 @@ class Map extends React.PureComponent {
 
   render() {
     return (
-      <div id="map" ref={this.map} style={{width: this.width, height: `100%`}}></div>
+      <div id="map" ref={this.map} style={this.styles}></div>
     );
   }
 }

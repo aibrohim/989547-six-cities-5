@@ -93,7 +93,7 @@ const Main = (props) => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} width={`100%`}/>
+                <Map offers={offers} styles={{width: `100%`}}/>
               </section>
             </div>
           </div>

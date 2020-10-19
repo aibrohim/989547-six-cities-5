@@ -128,7 +128,7 @@ const Offer = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            {/* <Map offers={nearOffers} width={`1144px`}/> */}
+            <Map offers={nearOffers} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
           </section>
         </section>
         <div className="container">
