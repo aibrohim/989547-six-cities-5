@@ -1,11 +1,12 @@
 import React from "react";
-import {MONTHS} from "../../consts.js";
 import CommentForm from "../comment/comment";
 import propTypes from "prop-types";
+import ReviewsList from "../reviews-list/reviews-list.jsx";
+import Map from "../map/map";
 
 const Offer = (props) => {
   const offer = props.history.location.offer;
-  const {isPremium, images, info, comments, rooms, adults, inside, cost, isFavorite, rate, title, type, host} = offer;
+  const {isPremium, images, info, nearOffers, comments, rooms, adults, inside, cost, isFavorite, rate, title, type, host} = offer;
   const {avatar, name} = host;
 
   return (
@@ -120,39 +121,15 @@ const Offer = (props) => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ul className="reviews__list">
-                  {comments.map((comment) => {
-                    return (
-                      <li key={comment.id} className="reviews__item">
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                            <img className="reviews__avatar user__avatar" src={comment.avatar} width="54" height="54" alt="Reviews avatar" />
-                          </div>
-                          <span className="reviews__user-name">
-                            {comment.name}
-                          </span>
-                        </div>
-                        <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span style={{width: `${comment.rate * 20}%`}}></span>
-                              <span className="visually-hidden">Rating</span>
-                            </div>
-                          </div>
-                          <p className="reviews__text">
-                            {comment.review}
-                          </p>
-                          <time className="reviews__time" dateTime={comment.date.toISOString()}>{`${MONTHS[comment.date.getMonth() + 1]} ${comment.date.getFullYear()}`}</time>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
+
+                <ReviewsList comments={comments}/>
                 <CommentForm />
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            {/* <Map offers={nearOffers} width={`1144px`}/> */}
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">

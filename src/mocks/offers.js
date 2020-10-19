@@ -106,7 +106,81 @@ const getOffer = () => {
       name: NAMES[getRandomInteger(0, NAMES.length - 1)],
     },
     images: getImages(),
-    comments: generateComments()
+    comments: generateComments(),
+    nearOffers: [
+      {
+        id: Date.now() + parseInt(Math.random() * 1000, 10),
+        city: getRandomCity(),
+        title: getRandomTitle(),
+        rate: Number(getRandomInteger(MIN_RATE_COUNT, MAX_RATE_COUNT)),
+        type: getRandomType(),
+        rooms: Number(getRandomInteger(MIN_ROOMS_COUNT, MAX_ROOMS_COUNT)),
+        adults: Number(getRandomInteger(MIN_ADULTS_COUNT, MAX_ADULTS_COUNT)),
+        isFavorite: Boolean(getRandomInteger(0, 1)),
+        isPremium: Boolean(getRandomInteger(0, 1)),
+        cost: Number(getRandomInteger(40, 300)),
+        inside: getRandomElementsArray(FEATURES),
+        info: getRandomElementsArray(INFO),
+        coords: [
+          52.3909553943508,
+          4.85309666406198
+        ],
+        host: {
+          avatar: `${AVATAR_URL}74`,
+          name: NAMES[getRandomInteger(0, NAMES.length - 1)],
+        },
+        images: getImages(),
+        comments: generateComments(),
+      },
+      {
+        id: Date.now() + parseInt(Math.random() * 1000, 10),
+        city: getRandomCity(),
+        title: getRandomTitle(),
+        rate: Number(getRandomInteger(MIN_RATE_COUNT, MAX_RATE_COUNT)),
+        type: getRandomType(),
+        rooms: Number(getRandomInteger(MIN_ROOMS_COUNT, MAX_ROOMS_COUNT)),
+        adults: Number(getRandomInteger(MIN_ADULTS_COUNT, MAX_ADULTS_COUNT)),
+        isFavorite: Boolean(getRandomInteger(0, 1)),
+        isPremium: Boolean(getRandomInteger(0, 1)),
+        cost: Number(getRandomInteger(40, 300)),
+        inside: getRandomElementsArray(FEATURES),
+        info: getRandomElementsArray(INFO),
+        coords: [
+          52.369553943508,
+          4.85309666406198
+        ],
+        host: {
+          avatar: `${AVATAR_URL}74`,
+          name: NAMES[getRandomInteger(0, NAMES.length - 1)],
+        },
+        images: getImages(),
+        comments: generateComments(),
+      },
+      {
+        id: Date.now() + parseInt(Math.random() * 1000, 10),
+        city: getRandomCity(),
+        title: getRandomTitle(),
+        rate: Number(getRandomInteger(MIN_RATE_COUNT, MAX_RATE_COUNT)),
+        type: getRandomType(),
+        rooms: Number(getRandomInteger(MIN_ROOMS_COUNT, MAX_ROOMS_COUNT)),
+        adults: Number(getRandomInteger(MIN_ADULTS_COUNT, MAX_ADULTS_COUNT)),
+        isFavorite: Boolean(getRandomInteger(0, 1)),
+        isPremium: Boolean(getRandomInteger(0, 1)),
+        cost: Number(getRandomInteger(40, 300)),
+        inside: getRandomElementsArray(FEATURES),
+        info: getRandomElementsArray(INFO),
+        coords: [
+          52.3809553943508,
+          4.939309666406198
+        ],
+        host: {
+          avatar: `${AVATAR_URL}74`,
+          name: NAMES[getRandomInteger(0, NAMES.length - 1)],
+        },
+        images: getImages(),
+        comments: generateComments(),
+      }
+    ]
   };
 };
 

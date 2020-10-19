@@ -92,7 +92,9 @@ const Main = (props) => {
               <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
-              <Map offers={offers}/>
+              <section className="cities__map map">
+                <Map offers={offers} width={`100%`}/>
+              </section>
             </div>
           </div>
         </div>
