@@ -2,11 +2,11 @@ import React from "react";
 import {Link} from "react-router-dom";
 import propTypes from "prop-types";
 
-const OfferCard = ({offer, onHover}) => {
+const OfferCard = ({className, block, offer, onHover}) => {
   const {id, isPremium, images, cost, isFavorite, rate, title, type} = offer;
   const onMouseOver = () => onHover(offer);
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver}>
+    <article className={`${className} place-card`} onMouseOver={onMouseOver}>
       {
         isPremium
           ? <div className="place-card__mark">
@@ -14,7 +14,7 @@ const OfferCard = ({offer, onHover}) => {
           </div>
           : ``
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
         <Link to={{
           pathname: `/offer/${id}`,
           offer
@@ -71,6 +71,8 @@ OfferCard.propTypes = {
     type: propTypes.string.isRequired,
     title: propTypes.string.isRequired
   }),
+  className: propTypes.string.isRequired,
+  block: propTypes.string.isRequired,
   onHover: propTypes.func,
 };
 
