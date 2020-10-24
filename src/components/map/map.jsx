@@ -60,7 +60,7 @@ class Map extends React.PureComponent {
 
 Map.propTypes = {
   offers: propTypes.array.isRequired,
-  styles: propTypes.string.isRequired
+  styles: propTypes.object.isRequired
 };
 
 export default Map;

@@ -24,7 +24,7 @@ class OffersList extends PureComponent {
 
   renderOffers(offers, Component) {
     return offers.map((offer) =>
-      <Component key={offer.id} offer={offer} />
+      <Component key={offer.id} offer={offer} onHover={() => this.setActiveOffer(offer)} />
     );
   }
 
