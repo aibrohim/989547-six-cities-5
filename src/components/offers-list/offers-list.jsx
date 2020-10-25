@@ -1,6 +1,12 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import OfferCard from "../offer-card/offer-card";
+import MainCard from "../offer-card-city/offer-card-city";
+import NearCard from "../offer-card-near/offer-card-near";
+
+const listTypesClasses = {
+  cityOffers: `city-offers`,
+  nearOffers: `near-offers`
+};
 
 class OffersList extends PureComponent {
   constructor(props) {
@@ -16,25 +22,37 @@ class OffersList extends PureComponent {
     });
   }
 
-  render() {
-    const {offers} = this.props;
-
-    return (
-      <div className="cities__places-list places__list tabs__content">
-        {offers.map((offer) =>
-          <OfferCard
-            offer={offer}
-            key={offer.id}
-            onHover={() => this.setActiveOffer(offer)}
-          />
-        )}
-      </div>
+  renderOffers(offers, Component) {
+    return offers.map((offer) =>
+      <Component key={offer.id} offer={offer} onHover={() => this.setActiveOffer(offer)} />
     );
+  }
+
+  render() {
+    const {offers, type} = this.props;
+
+    switch (type) {
+      case listTypesClasses.cityOffers:
+        return (
+          <div className={this.props.className}>
+            {this.renderOffers(offers, MainCard)}
+          </div>
+        );
+      case listTypesClasses.nearOffers:
+        return (
+          <div className={this.props.className}>
+            {this.renderOffers(offers, NearCard)}
+          </div>
+        );
+      default: return null;
+    }
   }
 }
 
 OffersList.propTypes = {
-  offers: PropTypes.array
+  offers: PropTypes.array,
+  className: PropTypes.string,
+  type: PropTypes.string
 };
 
 export default OffersList;
