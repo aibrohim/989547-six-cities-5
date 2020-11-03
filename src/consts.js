@@ -26,16 +26,6 @@ export const FEATURES = [
   `Baby seat`
 ];
 
-export const CITIES = [
-  `London`,
-  `Paris`,
-  `Tashkent`,
-  `Dubai`,
-  `Makkah`,
-  `Madinah`,
-  `Moscow`
-];
-
 export const INFO = [
   `Lorem, ipsum dolor sit amet consectetur adipisicing elit. In, perspiciatis.`,
   `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore magni veniam culpa fuga repellat!`,

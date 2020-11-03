@@ -7,13 +7,13 @@ import Login from "../login/login";
 import Offer from "../offer/offer";
 
 const App = (props) => {
-  const {rentingOffersCount, offers} = props;
+  const {rentingOffersCount, offers, cities} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Main offers={offers} rentingOffersCount={rentingOffersCount}/>
+          <Main offers={offers} cities={cities} rentingOffersCount={rentingOffersCount}/>
         </Route>
         <Route exact path="/favorites">
           <Favorites />
