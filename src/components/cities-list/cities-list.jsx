@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../store/action.js";
 import cities from "../../mocks/cities.js";
+import propTypes from "prop-types";
 
 class CitiesList extends React.PureComponent {
   constructor(props) {
@@ -12,36 +13,50 @@ class CitiesList extends React.PureComponent {
   }
 
   handleCityClick(evt) {
-    const {activeCity, cityChange} = this.props;
-    console.log(activeCity);
-    cityChange(evt.target.textContent);
+    const {activeCity, changeCity} = this.props;
 
     evt.preventDefault();
+    const changedCity = evt.target.textContent;
+
+    if (activeCity !== changedCity) {
+      changeCity(changedCity);
+    }
   }
 
   render() {
+    const {activeCity} = this.props;
     return (
       <section className="locations container">
         <ul ref={this.citiesList} className="locations__list tabs__list">
-          {cities.map((city) => (
-            <li key={city.id} className="locations__item" onClick={this.handleCityClick}>
-              <a className="locations__item-link tabs__item">
-                <span>{city.name}</span>
-              </a>
-            </li>
-          ))}
+          {cities.map((city) => {
+            const activeClass = (city.name === activeCity) && `tabs__item--active`;
+            return (
+              <li key={city.id} className="locations__item" onClick={this.handleCityClick}>
+                <a className={`locations__item-link tabs__item ${activeClass}`}>
+                  <span>{city.name}</span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </section>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  activeCity: state.activeCity
-});
+CitiesList.propTypes = {
+  activeCity: propTypes.string.isRequired,
+  changeCity: propTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
+  return ({
+    activeCity: state.activeCity
+  });
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  cityChange(city) {
+  changeCity(city) {
     dispatch(ActionCreator.changeCity(city));
   }
 });

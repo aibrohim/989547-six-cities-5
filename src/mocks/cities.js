@@ -4,7 +4,7 @@ export default [
     id: 1,
   },
   {
-    name: `Paris`,
+    name: `Kuala-Lumpur`,
     id: 2,
   },
   {

@@ -1,5 +1,5 @@
 import {getRandomInteger, getRandomElementsArray} from "../utils.js";
-import {NAMES, TYPES, TITLES, CITIES, FEATURES, INFO} from "../consts.js";
+import {NAMES, TYPES, TITLES, FEATURES, INFO} from "../consts.js";
 import cities from "./cities.js";
 
 const MIN_ROOMS_COUNT = 1;

@@ -6,14 +6,12 @@ import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import Offer from "../offer/offer";
 
-const App = (props) => {
-  const {rentingOffersCount, offers, cities} = props;
-
+const App = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Main offers={offers} cities={cities} rentingOffersCount={rentingOffersCount}/>
+          <Main/>
         </Route>
         <Route exact path="/favorites">
           <Favorites />
@@ -28,7 +26,6 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  rentingOffersCount: propTypes.number.isRequired,
   offers: propTypes.array
 };
 
