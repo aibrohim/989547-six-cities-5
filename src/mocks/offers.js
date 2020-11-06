@@ -1,5 +1,6 @@
-import {getRandomInteger, getRandomElementsArray} from "./utils.js";
-import {NAMES, TYPES, TITLES, CITIES, FEATURES, INFO} from "../consts.js";
+import {getRandomInteger, getRandomElementsArray} from "../utils.js";
+import {NAMES, TYPES, TITLES, FEATURES, INFO} from "../consts.js";
+import cities from "./cities.js";
 
 const MIN_ROOMS_COUNT = 1;
 const MAX_ROOMS_COUNT = 8;
@@ -40,8 +41,8 @@ const getRandomType = () => {
 };
 
 const getRandomCity = () => {
-  const getIndex = getRandomInteger(0, CITIES.length - 1);
-  return CITIES[getIndex];
+  const getIndex = getRandomInteger(0, cities.length - 1);
+  return cities[getIndex].name;
 };
 
 const image = () => {

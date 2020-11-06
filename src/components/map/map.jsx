@@ -18,10 +18,20 @@ class Map extends React.PureComponent {
     super(props);
 
     this.offers = props.offers;
+    this.markers = [];
     this.styles = Object.assign(
         props.styles,
         {height: `100%`}
     );
+  }
+
+  setMarkers(offers) {
+    offers.forEach((offer) => {
+      const offerCords = offer.coords;
+      const marker = leaflet.marker(offerCords, {icon});
+      this.markers.push(marker);
+      marker.addTo(this.map);
+    });
   }
 
   componentDidMount() {
@@ -31,6 +41,7 @@ class Map extends React.PureComponent {
       zoomControl: false,
       marker: true
     });
+    this.map = map;
     map.setView(city, zoom);
 
     leaflet
@@ -38,22 +49,23 @@ class Map extends React.PureComponent {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
       })
       .addTo(map);
+    this.setMarkers(this.offers);
+  }
 
-    this.offers.forEach((offer) => {
-      const offerCords = offer.coords;
-      leaflet
-        .marker(offerCords, {icon})
-        .addTo(map);
-    });
+  componentDidUpdate() {
+    const {offers} = this.props;
+    this.markers.forEach((marker) => marker.remove());
+    this.setMarkers(offers);
   }
 
   componentWillUnmount() {
-    this.offers = null;
+    this.map.remove();
+    this.map = null;
   }
 
   render() {
     return (
-      <div id="map" ref={this.map} style={this.styles}></div>
+      <div id="map" style={this.styles}></div>
     );
   }
 }

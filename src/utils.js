@@ -1,3 +1,7 @@
+export const filterOffers = (city, offers) => {
+  return offers.clice().filter((offer) => offer.city === city);
+};
+
 export const getRandomInteger = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
