@@ -56,3 +56,10 @@ export const MONTHS = {
   11: `November`,
   12: `December`
 };
+
+export const sortTypes = {
+  POPULAR: `POPULAR`,
+  PRICE_LOW_TO_HIGH: `PRICE_LOW_TO_HIGH`,
+  PRICE_HIGH_TO_LOW: `PRICE_HIGH_TO_LOW`,
+  TOP: `TOP`
+};
