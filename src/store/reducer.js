@@ -44,7 +44,8 @@ const sortCities = (offersList, type, city) => {
 const initialState = {
   activeCity: firstNotEmptyCity,
   offers: offersByCity.get(firstNotEmptyCity),
-  activeSortType: sortTypes.POPULAR
+  activeSortType: sortTypes.POPULAR,
+  hoveredOffer: ``
 };
 
 const reducer = (state = initialState, action) => {
@@ -66,6 +67,14 @@ const reducer = (state = initialState, action) => {
             activeSortType: action.payload,
             offers: sortCities(state.offers, action.payload, state.activeCity)
           }
+      );
+    case ActionType.HOVER_CITY:
+      return Object.assign(
+        {},
+        state,
+        {
+          hoveredOffer: action.payload
+        }
       );
   }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import leaflet from "leaflet";
 import propTypes from "prop-types";
+import {connect} from "react-redux";
 
 import "../../../node_modules/leaflet/dist/leaflet.css";
 
@@ -9,6 +10,11 @@ const city = [52.38333, 4.9];
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
   iconSize: [30, 30]
+});
+
+const activeIcon = leaflet.icon({
+  iconUrl: `img/pin-active.svg`,
+  iconSize: [27, 39]
 });
 
 const zoom = 12;
@@ -56,6 +62,14 @@ class Map extends React.PureComponent {
     const {offers} = this.props;
     this.markers.forEach((marker) => marker.remove());
     this.setMarkers(offers);
+
+    if (this.props.hoveredOffer) {
+      console.log(this.markers);
+      const cords = this.props.hoveredOffer.coords;
+      const marker = leaflet.marker(cords, {activeIcon});
+      this.markers.push(marker);
+      marker.addTo(this.map);
+    }
   }
 
   componentWillUnmount() {
@@ -75,4 +89,9 @@ Map.propTypes = {
   styles: propTypes.object.isRequired
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  hoveredOffer: state.hoveredOffer
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);
