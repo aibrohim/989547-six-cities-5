@@ -70,11 +70,11 @@ const reducer = (state = initialState, action) => {
       );
     case ActionType.HOVER_CITY:
       return Object.assign(
-        {},
-        state,
-        {
-          hoveredOffer: action.payload
-        }
+          {},
+          state,
+          {
+            hoveredOffer: action.payload
+          }
       );
   }
 

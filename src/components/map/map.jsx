@@ -59,17 +59,25 @@ class Map extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    const {offers} = this.props;
+    const {offers, hoveredOffer} = this.props;
     this.markers.forEach((marker) => marker.remove());
     this.setMarkers(offers);
 
-    if (this.props.hoveredOffer) {
-      console.log(this.markers);
-      const cords = this.props.hoveredOffer.coords;
-      const marker = leaflet.marker(cords, {activeIcon});
-      this.markers.push(marker);
-      marker.addTo(this.map);
+    if (this.markers) {
+      this.markers.forEach((marker) => marker.remove());
     }
+
+    this.markers = offers.reduce((items, {id, coords}) => {
+      const pin = leaflet.marker(coords, {
+        icon: id === hoveredOffer.id ? activeIcon : icon
+      });
+
+      items.push(pin);
+
+      return items;
+    }, []);
+
+    this.markers.forEach((marker) => marker.addTo(this.map));
   }
 
   componentWillUnmount() {
@@ -86,7 +94,8 @@ class Map extends React.PureComponent {
 
 Map.propTypes = {
   offers: propTypes.array.isRequired,
-  styles: propTypes.object.isRequired
+  styles: propTypes.object.isRequired,
+  hoveredOffer: propTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

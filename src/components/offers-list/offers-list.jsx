@@ -54,15 +54,16 @@ class OffersList extends PureComponent {
 }
 
 OffersList.propTypes = {
-  offers: PropTypes.array,
-  className: PropTypes.string,
-  type: PropTypes.string
+  offers: PropTypes.array.isRequired,
+  className: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  hoverOffer: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
   return ({
     hoveredOffer: state.hoveredOffer
-  })
+  });
 };
 
 const mapDispatchToProps = (dispatch) => ({
