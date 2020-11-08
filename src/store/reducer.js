@@ -45,7 +45,7 @@ const initialState = {
   activeCity: firstNotEmptyCity,
   offers: offersByCity.get(firstNotEmptyCity),
   activeSortType: sortTypes.POPULAR,
-  hoveredOffer: ``
+  hoveredOffer: {}
 };
 
 const reducer = (state = initialState, action) => {
