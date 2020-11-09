@@ -2,6 +2,8 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import MainCard from "../offer-card-city/offer-card-city";
 import NearCard from "../offer-card-near/offer-card-near";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../store/action.js";
 
 const listTypesClasses = {
   cityOffers: `city-offers`,
@@ -17,6 +19,8 @@ class OffersList extends PureComponent {
   }
 
   setActiveOffer(offer) {
+    const {hoverOffer} = this.props;
+    hoverOffer(offer);
     this.setState({
       activeOffer: offer
     });
@@ -50,9 +54,23 @@ class OffersList extends PureComponent {
 }
 
 OffersList.propTypes = {
-  offers: PropTypes.array,
-  className: PropTypes.string,
-  type: PropTypes.string
+  offers: PropTypes.array.isRequired,
+  className: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  hoverOffer: PropTypes.func.isRequired
 };
 
-export default OffersList;
+const mapStateToProps = (state) => {
+  return ({
+    hoveredOffer: state.hoveredOffer
+  });
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  hoverOffer(offer) {
+    dispatch(ActionCreator.hoverOffer(offer));
+  }
+});
+
+export {OffersList};
+export default connect(mapStateToProps, mapDispatchToProps)(OffersList);

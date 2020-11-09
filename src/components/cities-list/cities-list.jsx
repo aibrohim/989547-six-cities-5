@@ -7,8 +7,6 @@ import propTypes from "prop-types";
 class CitiesList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.citiesList = React.createRef();
-
     this.handleCityClick = this.handleCityClick.bind(this);
   }
 
