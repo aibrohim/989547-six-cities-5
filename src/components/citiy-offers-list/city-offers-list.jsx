@@ -5,6 +5,7 @@ import propTypes from "prop-types";
 
 const CityOffersList = (props) => {
   const {offers} = props;
+
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
