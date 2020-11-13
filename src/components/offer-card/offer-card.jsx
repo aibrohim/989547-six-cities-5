@@ -1,10 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import propTypes from "prop-types";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../store/action.js";
 
-const OfferCard = ({className, block, offer, onHover}) => {
+const OfferCard = ({hoverOffer, className, block, offer}) => {
   const {id, isPremium, images, cost, isFavorite, rate, title, type} = offer;
-  const onMouseOver = () => onHover(offer);
+  const onMouseOver = () => hoverOffer(offer);
   return (
     <article className={`${className} place-card`} onMouseOver={onMouseOver}>
       {
@@ -57,6 +59,12 @@ const OfferCard = ({className, block, offer, onHover}) => {
   );
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  hoverOffer(offer) {
+    dispatch(ActionCreator.hoverOffer(offer));
+  }
+});
+
 OfferCard.propTypes = {
   offer: propTypes.shape({
     id: propTypes.number.isRequired,
@@ -73,7 +81,8 @@ OfferCard.propTypes = {
   }),
   className: propTypes.string.isRequired,
   block: propTypes.string.isRequired,
-  onHover: propTypes.func,
+  hoverOffer: propTypes.func,
 };
 
-export default OfferCard;
+export {OfferCard};
+export default connect(``, mapDispatchToProps)(OfferCard);

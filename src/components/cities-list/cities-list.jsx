@@ -25,7 +25,7 @@ class CitiesList extends React.PureComponent {
     const {activeCity} = this.props;
     return (
       <section className="locations container">
-        <ul ref={this.citiesList} className="locations__list tabs__list">
+        <ul className="locations__list tabs__list">
           {cities.map((city) => {
             const activeClass = (city.name === activeCity) && `tabs__item--active`;
             return (
