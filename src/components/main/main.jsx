@@ -4,9 +4,12 @@ import CityOffersList from "./../citiy-offers-list/city-offers-list";
 import Map from "../map/map";
 import CitiesList from "../cities-list/cities-list";
 import {connect} from "react-redux";
+import CitiesEmpty from "../cities-empty/cities-empty";
 
 const Main = (props) => {
   const {offers} = props;
+
+  const noOffers = offers.length === 0;
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -32,18 +35,25 @@ const Main = (props) => {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={noOffers
+        ? `page__main page__main--index page__main--index-empty`
+        : `page__main page__main--index`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CitiesList/>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <CityOffersList offers={offers}/>
+          <div className={noOffers
+            ? `cities__places-container cities__places-container--empty container`
+            : `cities__places-container container`}>
+            {noOffers ? <CitiesEmpty /> : <CityOffersList offers={offers}/>}
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map offers={offers} styles={{width: `100%`}}/>
-              </section>
+              {!noOffers
+                ? (<section className="cities__map map">
+                  <Map offers={offers} styles={{width: `100%`}}/>
+                </section>)
+                : ``
+              }
             </div>
           </div>
         </div>
