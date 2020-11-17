@@ -26,10 +26,10 @@ const adaptToClient = (data) => {
   return adaptedData;
 };
 
-const OfferCard = ({hoverOfferAction, className, block, offer}) => {
+const OfferCard = ({onHoverOfferAction, className, block, offer}) => {
   const {id, isPremium, previewImg, cost, isFavorite, rate, title, type} = adaptToClient(offer);
 
-  const onMouseOver = () => hoverOfferAction(offer);
+  const onMouseOver = () => onHoverOfferAction(offer);
   return (
     <article className={`${className} place-card`} onMouseOver={onMouseOver}>
       {
@@ -83,7 +83,7 @@ const OfferCard = ({hoverOfferAction, className, block, offer}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  hoverOfferAction(offer) {
+  onHoverOfferAction(offer) {
     dispatch(hoverOffer(offer));
   }
 });
@@ -92,7 +92,7 @@ OfferCard.propTypes = {
   offer: propTypes.object,
   className: propTypes.string.isRequired,
   block: propTypes.string.isRequired,
-  hoverOfferAction: propTypes.func,
+  onHoverOfferAction: propTypes.func,
 };
 
 export {OfferCard};

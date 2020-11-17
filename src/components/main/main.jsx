@@ -5,6 +5,7 @@ import Map from "../map/map";
 import CitiesList from "../cities-list/cities-list";
 import {connect} from "react-redux";
 import CitiesEmpty from "../cities-empty/cities-empty";
+import classNames from "classnames";
 
 const Main = (props) => {
   const {offers} = props;
@@ -35,17 +36,13 @@ const Main = (props) => {
         </div>
       </header>
 
-      <main className={noOffers
-        ? `page__main page__main--index page__main--index-empty`
-        : `page__main page__main--index`}>
+      <main className={classNames(`page__main page__main--index`, {'page__main--index-empty': noOffers})}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CitiesList/>
         </div>
         <div className="cities">
-          <div className={noOffers
-            ? `cities__places-container cities__places-container--empty container`
-            : `cities__places-container container`}>
+          <div className={classNames(`cities__places-container container`, {'cities__places-container--empty': noOffers})}>
             {noOffers ? <CitiesEmpty /> : <CityOffersList offers={offers}/>}
             <div className="cities__right-section">
               {!noOffers
