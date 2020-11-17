@@ -66,8 +66,8 @@ Main.propTypes = {
   offers: propTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.offers
+const mapStateToProps = ({DATA}) => ({
+  offers: DATA.offers
 });
 
 export {Main};

@@ -5,8 +5,6 @@ import {connect} from "react-redux";
 
 import "../../../node_modules/leaflet/dist/leaflet.css";
 
-const city = [52.38333, 4.9];
-
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
   iconSize: [30, 30]
@@ -17,7 +15,9 @@ const activeIcon = leaflet.icon({
   iconSize: [27, 39]
 });
 
-const zoom = 12;
+const toCordsArray = (location) => {
+  return Array.from(Object.values(location));
+};
 
 class Map extends React.PureComponent {
   constructor(props) {
@@ -33,7 +33,7 @@ class Map extends React.PureComponent {
 
   setMarkers(offers) {
     offers.forEach((offer) => {
-      const offerCords = offer.coords;
+      const offerCords = toCordsArray(offer.location);
       const marker = leaflet.marker(offerCords, {icon});
       this.markers.push(marker);
       marker.addTo(this.map);
@@ -41,6 +41,8 @@ class Map extends React.PureComponent {
   }
 
   componentDidMount() {
+    const city = toCordsArray(this.offers[0].location);
+    const zoom = this.offers[0].location.zoom;
     const map = leaflet.map(`map`, {
       center: city,
       zoom,
@@ -67,7 +69,8 @@ class Map extends React.PureComponent {
       this.markers.forEach((marker) => marker.remove());
     }
 
-    this.markers = offers.reduce((items, {id, coords}) => {
+    this.markers = offers.reduce((items, {id, location}) => {
+      const coords = toCordsArray(location);
       const pin = leaflet.marker(coords, {
         icon: id === hoveredOffer.id ? activeIcon : icon
       });
@@ -98,8 +101,8 @@ Map.propTypes = {
   hoveredOffer: propTypes.object
 };
 
-const mapStateToProps = (state) => ({
-  hoveredOffer: state.hoveredOffer
+const mapStateToProps = ({PROCESS}) => ({
+  hoveredOffer: PROCESS.hoveredOffer
 });
 
 export {Map};

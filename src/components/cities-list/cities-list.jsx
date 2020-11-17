@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action.js";
-import cities from "../../mocks/cities.js";
+import {changeCity} from "../../store/action.js";
 import propTypes from "prop-types";
 
 class CitiesList extends React.PureComponent {
@@ -11,27 +10,27 @@ class CitiesList extends React.PureComponent {
   }
 
   handleCityClick(evt) {
-    const {activeCity, changeCity} = this.props;
+    const {activeCity, changeCityAction} = this.props;
 
     evt.preventDefault();
     const changedCity = evt.target.textContent;
 
     if (activeCity !== changedCity) {
-      changeCity(changedCity);
+      changeCityAction(changedCity);
     }
   }
 
   render() {
-    const {activeCity} = this.props;
+    const {activeCity, cities} = this.props;
     return (
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city) => {
-            const activeClass = (city.name === activeCity) && `tabs__item--active`;
+          {cities.map((city, index) => {
+            const activeClass = (city === activeCity) && `tabs__item--active`;
             return (
-              <li key={city.id} className="locations__item" onClick={this.handleCityClick}>
+              <li key={index} className="locations__item" onClick={this.handleCityClick}>
                 <a className={`locations__item-link tabs__item ${activeClass}`}>
-                  <span>{city.name}</span>
+                  <span>{city}</span>
                 </a>
               </li>
             );
@@ -43,19 +42,21 @@ class CitiesList extends React.PureComponent {
 }
 
 CitiesList.propTypes = {
-  activeCity: propTypes.string.isRequired,
-  changeCity: propTypes.func.isRequired
+  activeCity: propTypes.string,
+  changeCityAction: propTypes.func.isRequired,
+  cities: propTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({DATA}) => {
   return ({
-    activeCity: state.activeCity
+    cities: DATA.cities,
+    activeCity: DATA.activeCity
   });
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
+  changeCityAction(city) {
+    dispatch(changeCity(city));
   }
 });
 

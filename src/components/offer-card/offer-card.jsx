@@ -2,11 +2,34 @@ import React from "react";
 import {Link} from "react-router-dom";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action.js";
+import {hoverOffer} from "../../store/action.js";
 
-const OfferCard = ({hoverOffer, className, block, offer}) => {
-  const {id, isPremium, images, cost, isFavorite, rate, title, type} = offer;
-  const onMouseOver = () => hoverOffer(offer);
+const adaptToClient = (data) => {
+  const adaptedData = Object.assign(
+      {},
+      data,
+      {
+        isPremium: data.is_premium,
+        previewImg: data.preview_image,
+        cost: data.price,
+        isFavorite: data.is_favorite,
+        rate: data.rating
+      }
+  );
+
+  delete adaptedData.is_premium;
+  delete adaptedData.preview_image;
+  delete adaptedData.price;
+  delete adaptedData.is_favorite;
+  delete adaptedData.rating;
+
+  return adaptedData;
+};
+
+const OfferCard = ({hoverOfferAction, className, block, offer}) => {
+  const {id, isPremium, previewImg, cost, isFavorite, rate, title, type} = adaptToClient(offer);
+
+  const onMouseOver = () => hoverOfferAction(offer);
   return (
     <article className={`${className} place-card`} onMouseOver={onMouseOver}>
       {
@@ -21,7 +44,7 @@ const OfferCard = ({hoverOffer, className, block, offer}) => {
           pathname: `/offer/${id}`,
           offer
         }}>
-          <img className="place-card__image" src={images[0].url} width="260" height="200" alt={images[0].description} />
+          <img className="place-card__image" src={previewImg} width="260" height="200"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -60,19 +83,14 @@ const OfferCard = ({hoverOffer, className, block, offer}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  hoverOffer(offer) {
-    dispatch(ActionCreator.hoverOffer(offer));
+  hoverOfferAction(offer) {
+    dispatch(hoverOffer(offer));
   }
 });
 
 OfferCard.propTypes = {
   offer: propTypes.shape({
     id: propTypes.number.isRequired,
-    isPremium: propTypes.bool.isRequired,
-    images: propTypes.arrayOf(propTypes.shape({
-      url: propTypes.string.isRequired,
-      description: propTypes.string.isRequired
-    })),
     cost: propTypes.number.isRequired,
     isFavorite: propTypes.bool.isRequired,
     rate: propTypes.number.isRequired,
@@ -81,7 +99,7 @@ OfferCard.propTypes = {
   }),
   className: propTypes.string.isRequired,
   block: propTypes.string.isRequired,
-  hoverOffer: propTypes.func,
+  hoverOfferAction: propTypes.func,
 };
 
 export {OfferCard};
