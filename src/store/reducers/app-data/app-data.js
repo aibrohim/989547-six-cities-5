@@ -32,9 +32,6 @@ const getFirstNotEmptyCity = (offersByCity) => {
   return firstNotEmptyCity;
 };
 
-// const offersByCity = getOffersByCity();
-// const firstNotEmptyCity = getFirstNotEmptyCity(offersByCity);
-
 const sortCities = (offersList, type, allOffers, city) => {
   switch (type) {
     case sortTypes.POPULAR:

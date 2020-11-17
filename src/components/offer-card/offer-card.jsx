@@ -89,14 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 OfferCard.propTypes = {
-  offer: propTypes.shape({
-    id: propTypes.number.isRequired,
-    cost: propTypes.number.isRequired,
-    isFavorite: propTypes.bool.isRequired,
-    rate: propTypes.number.isRequired,
-    type: propTypes.string.isRequired,
-    title: propTypes.string.isRequired
-  }),
+  offer: propTypes.object,
   className: propTypes.string.isRequired,
   block: propTypes.string.isRequired,
   hoverOfferAction: propTypes.func,

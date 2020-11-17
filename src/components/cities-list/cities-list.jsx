@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {changeCity} from "../../store/action.js";
 import propTypes from "prop-types";
+import {hoverOffer} from "../../store/action.js";
 
 class CitiesList extends React.PureComponent {
   constructor(props) {
@@ -10,13 +11,14 @@ class CitiesList extends React.PureComponent {
   }
 
   handleCityClick(evt) {
-    const {activeCity, changeCityAction} = this.props;
+    const {activeCity, changeCityAction, hoverOfferAction} = this.props;
 
     evt.preventDefault();
     const changedCity = evt.target.textContent;
 
     if (activeCity !== changedCity) {
       changeCityAction(changedCity);
+      hoverOfferAction({});
     }
   }
 
@@ -44,19 +46,23 @@ class CitiesList extends React.PureComponent {
 CitiesList.propTypes = {
   activeCity: propTypes.string,
   changeCityAction: propTypes.func.isRequired,
-  cities: propTypes.array.isRequired
+  cities: propTypes.array.isRequired,
+  hoverOfferAction: propTypes.func
 };
 
 const mapStateToProps = ({DATA}) => {
   return ({
     cities: DATA.cities,
-    activeCity: DATA.activeCity
+    activeCity: DATA.activeCity,
   });
 };
 
 const mapDispatchToProps = (dispatch) => ({
   changeCityAction(city) {
     dispatch(changeCity(city));
+  },
+  hoverOfferAction(offer) {
+    dispatch(hoverOffer(offer));
   }
 });
 

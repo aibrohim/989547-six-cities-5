@@ -62,6 +62,18 @@ class Map extends React.PureComponent {
 
   componentDidUpdate() {
     const {offers, hoveredOffer} = this.props;
+    if (!hoveredOffer) {
+      this.map.flyTo(toCordsArray(offers[0].location), offers[0].location.zoom);
+    } else {
+      const hoveredOfferIndex = offers.findIndex((offer) => offer.id === hoveredOffer.id);
+
+      if ((hoveredOfferIndex < 0)) {
+        this.map.flyTo(toCordsArray(offers[0].location), offers[0].location.zoom);
+      } else {
+        this.map.flyTo(toCordsArray(offers[hoveredOfferIndex].location), offers[hoveredOfferIndex].location.zoom);
+      }
+    }
+
     this.markers.forEach((marker) => marker.remove());
     this.setMarkers(offers);
 
