@@ -20,7 +20,7 @@ class CitiesList extends React.PureComponent {
 
     if (activeCity !== changedCity) {
       changeCityAction(changedCity);
-      hoverOfferAction({});
+      hoverOfferAction();
       sortCitiesAction();
     }
   }
@@ -65,8 +65,8 @@ const mapDispatchToProps = (dispatch) => ({
   changeCityAction(city) {
     dispatch(changeCity(city));
   },
-  hoverOfferAction(offer) {
-    dispatch(hoverOffer(offer));
+  hoverOfferAction() {
+    dispatch(hoverOffer({}));
   },
   sortCitiesAction() {
     dispatch(sortCities(sortTypes.POPULAR));
