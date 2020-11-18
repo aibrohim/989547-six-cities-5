@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {changeCity} from "../../store/action.js";
 import propTypes from "prop-types";
 import {hoverOffer} from "../../store/action.js";
+import {sortCities} from "../../store/action.js";
+import {sortTypes} from "../../consts.js";
 
 class CitiesList extends React.PureComponent {
   constructor(props) {
@@ -11,7 +13,7 @@ class CitiesList extends React.PureComponent {
   }
 
   handleCityClick(evt) {
-    const {activeCity, changeCityAction, hoverOfferAction} = this.props;
+    const {activeCity, changeCityAction, hoverOfferAction, sortCitiesAction} = this.props;
 
     evt.preventDefault();
     const changedCity = evt.target.textContent;
@@ -19,6 +21,7 @@ class CitiesList extends React.PureComponent {
     if (activeCity !== changedCity) {
       changeCityAction(changedCity);
       hoverOfferAction({});
+      sortCitiesAction();
     }
   }
 
@@ -63,6 +66,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   hoverOfferAction(offer) {
     dispatch(hoverOffer(offer));
+  },
+  sortCitiesAction() {
+    dispatch(sortCities(sortTypes.POPULAR));
   }
 });
 
