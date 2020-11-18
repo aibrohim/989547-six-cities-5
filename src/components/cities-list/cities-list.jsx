@@ -27,15 +27,16 @@ class CitiesList extends React.PureComponent {
 
   render() {
     const {activeCity, cities} = this.props;
+
     return (
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city, index) => {
-            const activeClass = (city === activeCity) && `tabs__item--active`;
+          {cities.map((city) => {
+            const activeClass = (city.name === activeCity) && `tabs__item--active`;
             return (
-              <li key={index} className="locations__item" onClick={this.handleCityClick}>
+              <li key={city.index} className="locations__item" onClick={this.handleCityClick}>
                 <a className={`locations__item-link tabs__item ${activeClass}`}>
-                  <span>{city}</span>
+                  <span>{city.name}</span>
                 </a>
               </li>
             );

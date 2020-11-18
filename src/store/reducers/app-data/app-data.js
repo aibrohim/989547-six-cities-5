@@ -2,10 +2,20 @@ import {ActionType} from "../../action.js";
 import {sortTypes} from "../../../consts.js";
 
 const getCities = (offers) => {
-  const citiesList = new Set();
+  const citiesNames = new Set();
+  const citiesList = [];
+  let initialCityIndex = 0;
 
   offers.forEach((offer) => {
-    citiesList.add(offer.city.name);
+    citiesNames.add(offer.city.name);
+  });
+
+  citiesNames.forEach((city) => {
+    citiesList.push({
+      name: city,
+      index: initialCityIndex
+    });
+    initialCityIndex++;
   });
 
   return Array.from(citiesList);
@@ -15,7 +25,7 @@ const getOffersByCity = (offers) => {
   const cities = getCities(offers);
 
   const offersByCityMap = new Map(
-      cities.map((name) => [name, []])
+      cities.map((city) => [city.name, []])
   );
 
   offers.forEach((offer) => {
@@ -27,6 +37,7 @@ const getOffersByCity = (offers) => {
 
 const getFirstNotEmptyCity = (offersByCity) => {
   const keys = Array.from(offersByCity.keys());
+
   const firstNotEmptyCity = keys.find((key) => offersByCity.get(key).length > 0);
 
   return firstNotEmptyCity;
