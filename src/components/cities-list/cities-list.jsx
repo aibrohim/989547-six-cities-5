@@ -50,7 +50,8 @@ CitiesList.propTypes = {
   activeCity: propTypes.string,
   changeCityAction: propTypes.func.isRequired,
   cities: propTypes.array.isRequired,
-  hoverOfferAction: propTypes.func
+  hoverOfferAction: propTypes.func,
+  sortCitiesAction: propTypes.func
 };
 
 const mapStateToProps = ({DATA}) => {
