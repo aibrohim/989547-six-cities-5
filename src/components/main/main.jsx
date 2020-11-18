@@ -10,7 +10,36 @@ import classNames from "classnames";
 const Main = (props) => {
   const {offers} = props;
 
+  const noOffersClasses = {
+    MainEmpty: ``,
+    CitiesContainerEmpty: ``
+  };
+
   const noOffers = offers.length === 0;
+
+  if (noOffers) {
+    noOffersClasses.MainEmpty = `page__main--index-empty`;
+    noOffersClasses.CitiesContainerEmpty = `cities__places-container--empty`;
+  }
+
+  const mapSection = () => {
+    if (noOffers) {
+      return ``;
+    }
+    return (
+      <section className="cities__map map">
+        <Map offers={offers} styles={{width: `100%`}}/>
+      </section>
+    );
+  };
+
+  const offersListBlock = () => {
+    if (noOffers) {
+      return <CitiesEmpty />;
+    }
+    return <CityOffersList offers={offers}/>;
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -36,21 +65,16 @@ const Main = (props) => {
         </div>
       </header>
 
-      <main className={classNames(`page__main page__main--index`, {'page__main--index-empty': noOffers})}>
+      <main className={classNames(`page__main page__main--index`, noOffersClasses.MainEmpty)}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CitiesList/>
         </div>
         <div className="cities">
-          <div className={classNames(`cities__places-container container`, {'cities__places-container--empty': noOffers})}>
-            {noOffers ? <CitiesEmpty /> : <CityOffersList offers={offers}/>}
+          <div className={classNames(`cities__places-container container`, noOffersClasses.CitiesContainerEmpty)}>
+            {offersListBlock()}
             <div className="cities__right-section">
-              {!noOffers
-                ? (<section className="cities__map map">
-                  <Map offers={offers} styles={{width: `100%`}}/>
-                </section>)
-                : ``
-              }
+              {mapSection()}
             </div>
           </div>
         </div>
