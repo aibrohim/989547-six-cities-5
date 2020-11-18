@@ -37,11 +37,11 @@ const sortCities = (offersList, type, allOffers, city) => {
     case sortTypes.POPULAR:
       return getOffersByCity(allOffers).get(city);
     case sortTypes.PRICE_LOW_TO_HIGH:
-      return offersList.slice().sort((a, b) => a.price - b.price);
+      return offersList.slice().sort((a, b) => a.cost - b.cost);
     case sortTypes.PRICE_HIGH_TO_LOW:
-      return offersList.slice().sort((a, b) => b.price - a.price);
+      return offersList.slice().sort((a, b) => b.cost - a.cost);
     case sortTypes.TOP:
-      return offersList.slice().sort((a, b) => b.rating - a.rating);
+      return offersList.slice().sort((a, b) => b.rate - a.rate);
     default:
       return offersList;
   }
