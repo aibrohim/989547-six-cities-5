@@ -5,13 +5,14 @@ import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
 import NearOffersList from "../near-offers-list/near-offers-list";
 import {connect} from "react-redux";
-import {loadComments} from "../../store/api-action.js";
+import {getComments, getOfferById} from "../../store/api-action.js";
 
-const Offer = (props) => {
-  const offer = props.history.location.offer;
+const Offer = ({pathId, offer, comments, loadComments, loadOffer}) => {
+  loadComments(pathId);
+  loadOffer(pathId);
 
-  const {isPremium, description, nearOffers, comments, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
-  const {avatar, name} = host;
+  const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
+  const {avatar_url, name} = host;
 
   const images = offer.images.map((image, index) => ({
     url: image,
@@ -22,6 +23,7 @@ const Offer = (props) => {
     name: good,
     id: index
   }));
+
 
   return (
     <div className="page">
@@ -117,7 +119,7 @@ const Offer = (props) => {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={avatar} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={avatar_url} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {name}
@@ -138,13 +140,13 @@ const Offer = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearOffers} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
+            {/* <Map offers={nearOffers} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/> */}
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOffersList offers={nearOffers} />
+            {/* <NearOffersList offers={nearOffers} /> */}
           </section>
         </div>
       </main>
@@ -153,46 +155,50 @@ const Offer = (props) => {
 };
 
 Offer.propTypes = {
-  history: propTypes.object.isRequired,
+  history: propTypes.object,
   offer: propTypes.shape({
-    isPremium: propTypes.bool.isRequired,
+    isPremium: propTypes.bool,
     images: propTypes.arrayOf(propTypes.shape({
-      url: propTypes.string.isRequired,
-      description: propTypes.string.isRequired
-    })).isRequired,
-    info: propTypes.arrayOf(propTypes.string.isRequired).isRequired,
+      url: propTypes.string,
+      description: propTypes.string
+    })),
+    info: propTypes.arrayOf(propTypes.string),
     comments: propTypes.arrayOf(propTypes.shape({
-      avatar: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      date: propTypes.object.isRequired,
-      rate: propTypes.number.isRequired,
-      review: propTypes.string.isRequired
-    })).isRequired,
-    rooms: propTypes.number.isRequired,
-    adults: propTypes.number.isRequired,
+      avatar: propTypes.string,
+      name: propTypes.string,
+      date: propTypes.object,
+      rate: propTypes.number,
+      review: propTypes.string
+    })),
+    rooms: propTypes.number,
+    adults: propTypes.number,
     inside: propTypes.arrayOf(propTypes.string),
-    cost: propTypes.number.isRequired,
-    isFavorite: propTypes.bool.isRequired,
-    rate: propTypes.number.isRequired,
-    type: propTypes.string.isRequired,
-    title: propTypes.string.isRequired,
+    cost: propTypes.number,
+    isFavorite: propTypes.bool,
+    rate: propTypes.number,
+    type: propTypes.string,
+    title: propTypes.string,
     host: propTypes.objectOf({
-      avatar: propTypes.string.isRequired,
-      name: propTypes.string.isRequired
+      avatar: propTypes.string,
+      name: propTypes.string
     })
   }),
   onHover: propTypes.func,
 };
 
 const mapStateToProps = ({PROCESS}) => ({
-  comments: PROCESS.comments
+  comments: PROCESS.comments,
+  offer: PROCESS.activeOffer
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadComments(id) {
-    dispatch(loadComments(id));
+    dispatch(getComments(id));
+  },
+  loadOffer(id) {
+    dispatch(getOfferById(id));
   }
-})
+});
 
 export {Offer};
 export default connect(mapStateToProps, mapDispatchToProps)(Offer);

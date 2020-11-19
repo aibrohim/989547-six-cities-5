@@ -1,5 +1,4 @@
-import {loadOffers} from "./action.js";
-import {loadComments} from "./action.js";
+import {loadOffers, loadComments, loadOffer} from "./action.js";
 import {adaptToClient} from "../utils.js";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
@@ -9,10 +8,21 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
       return adaptToClient(offer);
     });
   })
-  .then((data) => dispatch(loadOffers(data)))
+  .then((data) => {
+    return dispatch(loadOffers(data));
+  })
 );
 
 export const getComments = (id) => (dispatch, _getState, api) => {
   api.get(`/comments/${id}`)
-  .then((comments) => dispatch(loadComments(comments)));
+  .then(({data}) => {
+    return dispatch(loadComments(data));
+  });
+};
+
+export const getOfferById = (id) => (dispatch, _getState, api) => {
+  api.get(`/hotels/${id}`)
+  .then(({data}) => {
+    return dispatch(loadOffer(data));
+  });
 };

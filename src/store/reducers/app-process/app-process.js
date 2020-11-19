@@ -3,7 +3,7 @@ import {ActionType} from "../../action.js";
 const initialState = {
   hoveredOffer: {},
   comments: [],
-  activeHotel: {},
+  activeOffer: {},
   nearbyHotels: [],
 };
 
@@ -23,6 +23,14 @@ const appProcess = (state = initialState, action) => {
           state,
           {
             comments: action.payload
+          }
+      );
+    case ActionType.LOAD_OFFER:
+      return Object.assign(
+          {},
+          state,
+          {
+            activeOffer: action.payload
           }
       );
   }

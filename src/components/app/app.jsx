@@ -19,7 +19,9 @@ const App = () => {
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route path="/offer/:id" exact component={Offer} />
+        <Route path="/offer/:id" exact render={({match}) => {
+          return <Offer pathId={match.params.id}/>;
+        }} />
       </Switch>
     </BrowserRouter>
   );
