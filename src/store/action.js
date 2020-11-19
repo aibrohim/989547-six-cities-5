@@ -2,7 +2,8 @@ export const ActionType = {
   CITY_CHANGE: `CITY_CHANGE`,
   SORT_OFFERS: `SORT_OFFERS`,
   HOVER_OFFER: `HOVER_OFFER`,
-  LOAD_OFFERS: `LOAD_OFFERS`
+  LOAD_OFFERS: `LOAD_OFFERS`,
+  LOAD_COMMENTS:  `LOAD_COMMENTS`
 };
 
 export const changeCity = (city) => ({
@@ -23,4 +24,9 @@ export const hoverOffer = (hoveredOffer) => ({
 export const loadOffers = (offers) => ({
   type: ActionType.LOAD_OFFERS,
   payload: offers
+});
+
+export const loadComents = (comments) => ({
+  type: ActionType.LOAD_COMMENTS,
+  payload: comments
 });

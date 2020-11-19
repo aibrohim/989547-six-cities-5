@@ -1,7 +1,10 @@
 import {ActionType} from "../../action.js";
 
 const initialState = {
-  hoveredOffer: {}
+  hoveredOffer: {},
+  comments: [],
+  activeHotel: {},
+  nearbyHotels: [],
 };
 
 const appProcess = (state = initialState, action) => {
@@ -12,6 +15,14 @@ const appProcess = (state = initialState, action) => {
           state,
           {
             hoveredOffer: action.payload
+          }
+      );
+    case ActionType.LOAD_COMMENTS:
+      return Object.assign(
+          {},
+          state,
+          {
+            comments: action.payload
           }
       );
   }

@@ -4,11 +4,24 @@ import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
 import NearOffersList from "../near-offers-list/near-offers-list";
+import {connect} from "react-redux";
+import {loadComments} from "../../store/api-action.js";
 
 const Offer = (props) => {
   const offer = props.history.location.offer;
-  const {isPremium, images, info, nearOffers, comments, rooms, adults, inside, cost, isFavorite, rate, title, type, host} = offer;
+
+  const {isPremium, description, nearOffers, comments, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
   const {avatar, name} = host;
+
+  const images = offer.images.map((image, index) => ({
+    url: image,
+    id: index
+  }));
+
+  const goods = offer.goods.map((good, index) => ({
+    name: good,
+    id: index
+  }));
 
   return (
     <div className="page">
@@ -41,7 +54,7 @@ const Offer = (props) => {
             <div className="property__gallery">
               {images.map((image) => {
                 return (<div key={image.id} className="property__image-wrapper">
-                  <img className="property__image" src={image.url} alt={image.description} />
+                  <img className="property__image" src={image.url} alt="Photo studio" />
                 </div>);
               })}
             </div>
@@ -91,10 +104,10 @@ const Offer = (props) => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {inside.map((feature, index) => {
+                  {goods.map((good) => {
                     return (
-                      <li key={index} className="property__inside-item">
-                        {feature}
+                      <li key={good.id} className="property__inside-item">
+                        {good.name}
                       </li>
                     );
                   })}
@@ -111,13 +124,9 @@ const Offer = (props) => {
                   </span>
                 </div>
                 <div className="property__description">
-                  {info.map((sentence, index) => {
-                    return (
-                      <p key={index} className="property__text">
-                        {sentence}
-                      </p>
-                    );
-                  })}
+                  <p className="property__text">
+                    {description}
+                  </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
@@ -175,4 +184,15 @@ Offer.propTypes = {
   onHover: propTypes.func,
 };
 
-export default Offer;
+const mapStateToProps = ({PROCESS}) => ({
+  comments: PROCESS.comments
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadComments(id) {
+    dispatch(loadComments(id));
+  }
+})
+
+export {Offer};
+export default connect(mapStateToProps, mapDispatchToProps)(Offer);
