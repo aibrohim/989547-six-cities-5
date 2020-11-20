@@ -5,12 +5,9 @@ import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
 import NearOffersList from "../near-offers-list/near-offers-list";
 import {connect} from "react-redux";
-import {getComments, getOfferById} from "../../store/api-action.js";
 
-const Offer = ({pathId, offer, comments, loadComments, loadOffer}) => {
-  loadComments(pathId);
-  loadOffer(pathId);
-
+const Offer = ({pathId, offer, comments}) => {
+  console.log(offer);
   const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
   const {avatar_url, name} = host;
 
@@ -186,19 +183,10 @@ Offer.propTypes = {
   onHover: propTypes.func,
 };
 
-const mapStateToProps = ({PROCESS}) => ({
-  comments: PROCESS.comments,
-  offer: PROCESS.activeOffer
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadComments(id) {
-    dispatch(getComments(id));
-  },
-  loadOffer(id) {
-    dispatch(getOfferById(id));
-  }
+const mapStateToProps = (state) => ({
+  comments: state.PROCESS.comments,
+  offer: state.PROCESS.activeOffer
 });
 
 export {Offer};
-export default connect(mapStateToProps, mapDispatchToProps)(Offer);
+export default connect(mapStateToProps)(Offer);

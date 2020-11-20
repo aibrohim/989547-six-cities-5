@@ -5,8 +5,10 @@ import Main from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import Offer from "../offer/offer";
+import {connect} from "react-redux";
+import {getComments, getOfferById} from "../../store/api-action.js";
 
-const App = () => {
+const App = ({loadComments, loadOffer}) => {
   return (
     <BrowserRouter>
       <Switch>
@@ -20,7 +22,10 @@ const App = () => {
           <Login />
         </Route>
         <Route path="/offer/:id" exact render={({match}) => {
-          return <Offer pathId={match.params.id}/>;
+          const pathId = match.params.id;
+          loadComments(+pathId);
+          loadOffer(+pathId);
+          return <Offer pathId={pathId}/>;
         }} />
       </Switch>
     </BrowserRouter>
@@ -31,5 +36,15 @@ App.propTypes = {
   offers: propTypes.array
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  loadComments(id) {
+    dispatch(getComments(id));
+  },
+  loadOffer(id) {
+    dispatch(getOfferById(id));
+  }
+});
+
+export {App};
+export default connect(null, mapDispatchToProps)(App);
 

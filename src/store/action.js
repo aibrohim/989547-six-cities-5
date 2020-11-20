@@ -35,4 +35,4 @@ export const loadComments = (comments) => ({
 export const loadOffer = (offer) => ({
   type: ActionType.LOAD_OFFER,
   payload: offer
-})
+});
