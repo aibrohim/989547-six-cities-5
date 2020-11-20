@@ -4,12 +4,14 @@ import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
 import NearOffersList from "../near-offers-list/near-offers-list";
+import {withDataLoading} from "../../hocks/with-data-loading";
 import {connect} from "react-redux";
+import classNames from "classnames";
 
-const Offer = ({pathId, offer, comments}) => {
-  console.log(offer);
+const Offer = (props) => {
+  const {offer, comments, nearbyHotels} = props;
   const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
-  const {avatar_url, name} = host;
+  const {avatarUrl, name, isPro} = host;
 
   const images = offer.images.map((image, index) => ({
     url: image,
@@ -115,8 +117,8 @@ const Offer = ({pathId, offer, comments}) => {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={avatar_url} width="74" height="74" alt="Host avatar" />
+                  <div className={classNames(`property__avatar-wrapper user__avatar-wrapper`, {"property__avatar-wrapper--pro": isPro})}>
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {name}
@@ -137,13 +139,13 @@ const Offer = ({pathId, offer, comments}) => {
             </div>
           </div>
           <section className="property__map map">
-            {/* <Map offers={nearOffers} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/> */}
+            <Map offers={nearbyHotels} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            {/* <NearOffersList offers={nearOffers} /> */}
+            <NearOffersList offers={nearbyHotels} />
           </section>
         </div>
       </main>
@@ -152,41 +154,16 @@ const Offer = ({pathId, offer, comments}) => {
 };
 
 Offer.propTypes = {
-  history: propTypes.object,
-  offer: propTypes.shape({
-    isPremium: propTypes.bool,
-    images: propTypes.arrayOf(propTypes.shape({
-      url: propTypes.string,
-      description: propTypes.string
-    })),
-    info: propTypes.arrayOf(propTypes.string),
-    comments: propTypes.arrayOf(propTypes.shape({
-      avatar: propTypes.string,
-      name: propTypes.string,
-      date: propTypes.object,
-      rate: propTypes.number,
-      review: propTypes.string
-    })),
-    rooms: propTypes.number,
-    adults: propTypes.number,
-    inside: propTypes.arrayOf(propTypes.string),
-    cost: propTypes.number,
-    isFavorite: propTypes.bool,
-    rate: propTypes.number,
-    type: propTypes.string,
-    title: propTypes.string,
-    host: propTypes.objectOf({
-      avatar: propTypes.string,
-      name: propTypes.string
-    })
-  }),
-  onHover: propTypes.func,
+  offer: propTypes.object.isRequired,
+  comments: propTypes.array.isRequired,
+  nearbyHotels: propTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  comments: state.PROCESS.comments,
-  offer: state.PROCESS.activeOffer
+const mapStateToProps = ({PROCESS}) => ({
+  offer: PROCESS.activeOffer,
+  comments: PROCESS.comments,
+  nearbyHotels: PROCESS.nearbyHotels
 });
 
 export {Offer};
-export default connect(mapStateToProps)(Offer);
+export default connect(mapStateToProps)(withDataLoading(Offer));

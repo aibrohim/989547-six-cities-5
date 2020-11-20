@@ -33,6 +33,14 @@ const appProcess = (state = initialState, action) => {
             activeOffer: action.payload
           }
       );
+    case ActionType.LOAD_NEARBY_OFFERS:
+      return Object.assign(
+          {},
+          state,
+          {
+            nearbyHotels: action.payload
+          }
+      );
   }
 
   return state;

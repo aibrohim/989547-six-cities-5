@@ -21,7 +21,7 @@ export const getRandomElementsArray = (array) => {
   return splicedArray;
 };
 
-export const adaptToClient = (data) => {
+export const adaptOfferToClient = (data) => {
   const adaptedData = Object.assign(
       {},
       data,
@@ -30,15 +30,46 @@ export const adaptToClient = (data) => {
         previewImg: data.preview_image,
         cost: data.price,
         isFavorite: data.is_favorite,
-        rate: data.rating
+        rate: data.rating,
+        host: Object.assign(
+            {},
+            data.host,
+            {
+              avatarUrl: data.host.avatar_url,
+              isPro: data.host.is_pro
+            }
+        )
       }
   );
-
   delete adaptedData.is_premium;
   delete adaptedData.preview_image;
   delete adaptedData.price;
   delete adaptedData.is_favorite;
   delete adaptedData.rating;
+  delete adaptedData.host.avatar_url;
+  delete adaptedData.host.is_pro;
 
   return adaptedData;
+};
+
+export const adaptReviewToClient = (comment) => {
+  const adaptedComment = Object.assign(
+      {},
+      comment,
+      {
+        user: Object.assign(
+            {},
+            comment.user,
+            {
+              avatarUrl: comment.user.avatar_url,
+              isPro: comment.user.is_pro
+            }
+        )
+      }
+  );
+
+  delete adaptedComment.user.is_pro;
+  delete adaptedComment.user.avatar_url;
+
+  return adaptedComment;
 };

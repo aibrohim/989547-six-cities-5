@@ -5,11 +5,12 @@ import propTypes from "prop-types";
 const Review = ({review}) => {
   const {user, comment, rating} = review;
   const date = new Date(review.date);
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={user.avatar_url} width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">
           {user.name}
@@ -32,12 +33,14 @@ const Review = ({review}) => {
 };
 
 Review.propTypes = {
-  comment: propTypes.shape({
-    avatar: propTypes.string,
-    name: propTypes.string,
-    date: propTypes.string,
-    rate: propTypes.number,
-    review: propTypes.string
+  review: propTypes.shape({
+    user: propTypes.shape({
+      avatarUrl: propTypes.string.isRequired,
+      name: propTypes.string
+    }).isRequired,
+    rating: propTypes.number.isRequired,
+    date: propTypes.string.isRequired,
+    comment: propTypes.string.isRequired,
   })
 };
 

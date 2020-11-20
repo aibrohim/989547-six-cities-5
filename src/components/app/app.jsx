@@ -6,9 +6,9 @@ import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import Offer from "../offer/offer";
 import {connect} from "react-redux";
-import {getComments, getOfferById} from "../../store/api-action.js";
+import {getComments, getOfferById, getNearbyOffers} from "../../store/api-action.js";
 
-const App = ({loadComments, loadOffer}) => {
+const App = ({loadComments, loadOffer, loadNearbyOffers}) => {
   return (
     <BrowserRouter>
       <Switch>
@@ -23,8 +23,9 @@ const App = ({loadComments, loadOffer}) => {
         </Route>
         <Route path="/offer/:id" exact render={({match}) => {
           const pathId = match.params.id;
-          loadComments(+pathId);
           loadOffer(+pathId);
+          loadComments(+pathId);
+          loadNearbyOffers(+pathId);
           return <Offer pathId={pathId}/>;
         }} />
       </Switch>
@@ -33,7 +34,9 @@ const App = ({loadComments, loadOffer}) => {
 };
 
 App.propTypes = {
-  offers: propTypes.array
+  loadComments: propTypes.func.isRequired,
+  loadOffer: propTypes.func.isRequired,
+  loadNearbyOffers: propTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -42,6 +45,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadOffer(id) {
     dispatch(getOfferById(id));
+  },
+  loadNearbyOffers(id) {
+    dispatch(getNearbyOffers(id));
   }
 });
 
