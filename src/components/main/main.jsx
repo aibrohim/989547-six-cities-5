@@ -11,15 +11,15 @@ const Main = (props) => {
   const {offers} = props;
 
   const noOffersClasses = {
-    MainEmpty: ``,
-    CitiesContainerEmpty: ``
+    mainEmpty: ``,
+    citiesContainerEmpty: ``
   };
 
   const noOffers = offers.length === 0;
 
   if (noOffers) {
-    noOffersClasses.MainEmpty = `page__main--index-empty`;
-    noOffersClasses.CitiesContainerEmpty = `cities__places-container--empty`;
+    noOffersClasses.mainEmpty = `page__main--index-empty`;
+    noOffersClasses.citiesContainerEmpty = `cities__places-container--empty`;
   }
 
   const mapSection = () => {
@@ -65,13 +65,13 @@ const Main = (props) => {
         </div>
       </header>
 
-      <main className={classNames(`page__main page__main--index`, noOffersClasses.MainEmpty)}>
+      <main className={classNames(`page__main page__main--index`, noOffersClasses.mainEmpty)}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CitiesList/>
         </div>
         <div className="cities">
-          <div className={classNames(`cities__places-container container`, noOffersClasses.CitiesContainerEmpty)}>
+          <div className={classNames(`cities__places-container container`, noOffersClasses.citiesContainerEmpty)}>
             {offersListBlock()}
             <div className="cities__right-section">
               {mapSection()}
