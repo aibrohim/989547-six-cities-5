@@ -31,6 +31,7 @@ export const adaptOfferToClient = (data) => {
         cost: data.price,
         isFavorite: data.is_favorite,
         rate: data.rating,
+        adults: data.max_adults,
         host: Object.assign(
             {},
             data.host,
