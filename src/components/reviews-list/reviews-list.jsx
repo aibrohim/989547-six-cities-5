@@ -7,7 +7,7 @@ const ReviewsList = ({comments}) => {
     <ul className="reviews__list">
       {comments.map((comment) => {
         return (
-          <Review key={comment.id} comment={comment}/>
+          <Review key={comment.id} review={comment}/>
         );
       })}
     </ul>
@@ -16,11 +16,11 @@ const ReviewsList = ({comments}) => {
 
 ReviewsList.propTypes = {
   comments: propTypes.arrayOf(propTypes.shape({
-    avatar: propTypes.string.isRequired,
-    name: propTypes.string.isRequired,
-    date: propTypes.object.isRequired,
-    rate: propTypes.number.isRequired,
-    review: propTypes.string.isRequired
+    avatar: propTypes.string,
+    name: propTypes.string,
+    date: propTypes.string,
+    rate: propTypes.number,
+    review: propTypes.string
   })).isRequired,
 };
 

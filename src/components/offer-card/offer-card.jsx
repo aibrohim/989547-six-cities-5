@@ -2,11 +2,12 @@ import React from "react";
 import {Link} from "react-router-dom";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action.js";
+import {hoverOffer} from "../../store/action.js";
 
-const OfferCard = ({hoverOffer, className, block, offer}) => {
-  const {id, isPremium, images, cost, isFavorite, rate, title, type} = offer;
-  const onMouseOver = () => hoverOffer(offer);
+const OfferCard = ({onHoverOfferAction, className, block, offer}) => {
+  const {id, isPremium, previewImg, cost, isFavorite, rate, title, type} = offer;
+
+  const onMouseOver = () => onHoverOfferAction(offer);
   return (
     <article className={`${className} place-card`} onMouseOver={onMouseOver}>
       {
@@ -21,7 +22,7 @@ const OfferCard = ({hoverOffer, className, block, offer}) => {
           pathname: `/offer/${id}`,
           offer
         }}>
-          <img className="place-card__image" src={images[0].url} width="260" height="200" alt={images[0].description} />
+          <img className="place-card__image" src={previewImg} width="260" height="200"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -60,28 +61,16 @@ const OfferCard = ({hoverOffer, className, block, offer}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  hoverOffer(offer) {
-    dispatch(ActionCreator.hoverOffer(offer));
+  onHoverOfferAction(offer) {
+    dispatch(hoverOffer(offer));
   }
 });
 
 OfferCard.propTypes = {
-  offer: propTypes.shape({
-    id: propTypes.number.isRequired,
-    isPremium: propTypes.bool.isRequired,
-    images: propTypes.arrayOf(propTypes.shape({
-      url: propTypes.string.isRequired,
-      description: propTypes.string.isRequired
-    })),
-    cost: propTypes.number.isRequired,
-    isFavorite: propTypes.bool.isRequired,
-    rate: propTypes.number.isRequired,
-    type: propTypes.string.isRequired,
-    title: propTypes.string.isRequired
-  }),
+  offer: propTypes.object,
   className: propTypes.string.isRequired,
   block: propTypes.string.isRequired,
-  hoverOffer: propTypes.func,
+  onHoverOfferAction: propTypes.func,
 };
 
 export {OfferCard};

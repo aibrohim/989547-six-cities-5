@@ -4,11 +4,25 @@ import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
 import NearOffersList from "../near-offers-list/near-offers-list";
+import {withDataLoading} from "../../hocks/with-data-loading";
+import {connect} from "react-redux";
+import classNames from "classnames";
 
 const Offer = (props) => {
-  const offer = props.history.location.offer;
-  const {isPremium, images, info, nearOffers, comments, rooms, adults, inside, cost, isFavorite, rate, title, type, host} = offer;
-  const {avatar, name} = host;
+  const {offer, comments, nearbyHotels} = props;
+  const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
+  const {avatarUrl, name, isPro} = host;
+
+  const images = offer.images.map((image, index) => ({
+    url: image,
+    id: index
+  }));
+
+  const goods = offer.goods.map((good, index) => ({
+    name: good,
+    id: index
+  }));
+
 
   return (
     <div className="page">
@@ -41,7 +55,7 @@ const Offer = (props) => {
             <div className="property__gallery">
               {images.map((image) => {
                 return (<div key={image.id} className="property__image-wrapper">
-                  <img className="property__image" src={image.url} alt={image.description} />
+                  <img className="property__image" src={image.url} alt="Photo studio" />
                 </div>);
               })}
             </div>
@@ -91,10 +105,10 @@ const Offer = (props) => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {inside.map((feature, index) => {
+                  {goods.map((good) => {
                     return (
-                      <li key={index} className="property__inside-item">
-                        {feature}
+                      <li key={good.id} className="property__inside-item">
+                        {good.name}
                       </li>
                     );
                   })}
@@ -103,21 +117,17 @@ const Offer = (props) => {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={avatar} width="74" height="74" alt="Host avatar" />
+                  <div className={classNames(`property__avatar-wrapper user__avatar-wrapper`, {"property__avatar-wrapper--pro": isPro})}>
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {name}
                   </span>
                 </div>
                 <div className="property__description">
-                  {info.map((sentence, index) => {
-                    return (
-                      <p key={index} className="property__text">
-                        {sentence}
-                      </p>
-                    );
-                  })}
+                  <p className="property__text">
+                    {description}
+                  </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
@@ -129,13 +139,13 @@ const Offer = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearOffers} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
+            <Map offers={nearbyHotels} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOffersList offers={nearOffers} />
+            <NearOffersList offers={nearbyHotels} />
           </section>
         </div>
       </main>
@@ -144,35 +154,16 @@ const Offer = (props) => {
 };
 
 Offer.propTypes = {
-  history: propTypes.object.isRequired,
-  offer: propTypes.shape({
-    isPremium: propTypes.bool.isRequired,
-    images: propTypes.arrayOf(propTypes.shape({
-      url: propTypes.string.isRequired,
-      description: propTypes.string.isRequired
-    })).isRequired,
-    info: propTypes.arrayOf(propTypes.string.isRequired).isRequired,
-    comments: propTypes.arrayOf(propTypes.shape({
-      avatar: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      date: propTypes.object.isRequired,
-      rate: propTypes.number.isRequired,
-      review: propTypes.string.isRequired
-    })).isRequired,
-    rooms: propTypes.number.isRequired,
-    adults: propTypes.number.isRequired,
-    inside: propTypes.arrayOf(propTypes.string),
-    cost: propTypes.number.isRequired,
-    isFavorite: propTypes.bool.isRequired,
-    rate: propTypes.number.isRequired,
-    type: propTypes.string.isRequired,
-    title: propTypes.string.isRequired,
-    host: propTypes.objectOf({
-      avatar: propTypes.string.isRequired,
-      name: propTypes.string.isRequired
-    })
-  }),
-  onHover: propTypes.func,
+  offer: propTypes.object.isRequired,
+  comments: propTypes.array.isRequired,
+  nearbyHotels: propTypes.array.isRequired
 };
 
-export default Offer;
+const mapStateToProps = ({PROCESS}) => ({
+  offer: PROCESS.activeOffer,
+  comments: PROCESS.comments,
+  nearbyHotels: PROCESS.nearbyHotels
+});
+
+export {Offer};
+export default connect(mapStateToProps)(withDataLoading(Offer));

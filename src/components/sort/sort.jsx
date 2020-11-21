@@ -1,13 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action.js";
+import {sortCities} from "../../store/action.js";
 import {sortTypes} from "../../consts.js";
 import propTypes from "prop-types";
 
 const Sort = (props) => {
-  const {activeSortType, sortCities} = props;
+  const {activeSortType, sortCitiesAction} = props;
   const handleClick = (evt) => {
-    sortCities(evt.target.dataset.sortType);
+    sortCitiesAction(evt.target.dataset.sortType);
   };
 
   const activeClass = (elementSortType) => {
@@ -33,19 +33,19 @@ const Sort = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  activeSortType: state.activeSortType
+const mapStateToProps = ({DATA}) => ({
+  activeSortType: DATA.activeSortType
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  sortCities(sortType) {
-    dispatch(ActionCreator.sortCities(sortType));
+  sortCitiesAction(sortType) {
+    dispatch(sortCities(sortType));
   }
 });
 
 Sort.propTypes = {
-  activeSortType: propTypes.string.isRequired,
-  sortCities: propTypes.func.isRequired
+  activeSortType: propTypes.string,
+  sortCitiesAction: propTypes.func
 };
 
 export {Sort};
