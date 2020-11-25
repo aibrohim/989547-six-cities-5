@@ -7,9 +7,12 @@ import NearOffersList from "../near-offers-list/near-offers-list";
 import {withDataLoading} from "../../hocks/with-data-loading";
 import {connect} from "react-redux";
 import classNames from "classnames";
+import {Link} from "react-router-dom";
+import UserNav from "../user-nav/user-nav";
+import {AuthorizationStatus} from "../../consts";
 
 const Offer = (props) => {
-  const {offer, comments, nearbyHotels} = props;
+  const {offer, comments, nearbyHotels, authorizationStatus} = props;
   const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
   const {avatarUrl, name, isPro} = host;
 
@@ -23,6 +26,13 @@ const Offer = (props) => {
     id: index
   }));
 
+  const commentComponent = () => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      return <CommentForm />;
+    }
+    return null;
+  };
+
 
   return (
     <div className="page">
@@ -30,21 +40,11 @@ const Offer = (props) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to="/">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              </Link>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <UserNav />
           </div>
         </div>
       </header>
@@ -134,7 +134,7 @@ const Offer = (props) => {
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
 
                 <ReviewsList comments={comments}/>
-                <CommentForm />
+                {commentComponent()}
               </section>
             </div>
           </div>
@@ -156,13 +156,15 @@ const Offer = (props) => {
 Offer.propTypes = {
   offer: propTypes.object.isRequired,
   comments: propTypes.array.isRequired,
-  nearbyHotels: propTypes.array.isRequired
+  nearbyHotels: propTypes.array.isRequired,
+  authorizationStatus: propTypes.string.isRequired
 };
 
-const mapStateToProps = ({PROCESS}) => ({
+const mapStateToProps = ({PROCESS, USER}) => ({
   offer: PROCESS.activeOffer,
   comments: PROCESS.comments,
-  nearbyHotels: PROCESS.nearbyHotels
+  nearbyHotels: PROCESS.nearbyHotels,
+  authorizationStatus: USER.authorizationStatus
 });
 
 export {Offer};

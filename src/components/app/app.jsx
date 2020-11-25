@@ -1,26 +1,40 @@
 import React from "react";
 import propTypes from "prop-types";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {Router as BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import Offer from "../offer/offer";
 import {connect} from "react-redux";
 import {getComments, getOfferById, getNearbyOffers} from "../../store/api-action.js";
+import PrivateRoute from "../private-route/private-route";
+import browserHistory from "../../browser-history";
 
 const App = ({loadComments, loadOffer, loadNearbyOffers}) => {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path="/">
           <Main/>
         </Route>
-        <Route exact path="/favorites">
-          <Favorites />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
+        <PrivateRoute
+          exact
+          path="/favorites"
+          redirectTo="/login"
+          type="toFavorites"
+          render={() => {
+            return <Favorites />;
+          }}
+        />
+        <PrivateRoute
+          exact
+          path="/login"
+          redirectTo="/"
+          type="toLogin"
+          render={() => {
+            return <Login />;
+          }}
+        />
         <Route path="/offer/:id" exact render={({match}) => {
           const pathId = match.params.id;
           loadOffer(+pathId);
