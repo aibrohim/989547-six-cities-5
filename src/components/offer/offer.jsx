@@ -10,10 +10,11 @@ import classNames from "classnames";
 import {Link} from "react-router-dom";
 import UserNav from "../user-nav/user-nav";
 import {AuthorizationStatus} from "../../consts";
+import BookmarkButton from "../../bookmarkButton/bookmarkButton";
 
 const Offer = (props) => {
   const {offer, comments, nearbyHotels, authorizationStatus} = props;
-  const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
+  const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host, id} = offer;
   const {avatarUrl, name, isPro} = host;
 
   const images = offer.images.map((image, index) => ({
@@ -71,14 +72,7 @@ const Offer = (props) => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={isFavorite === true
-                  ? `property__bookmark-button property__bookmark-button--active button`
-                  : `property__bookmark-button button`} type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkButton name="property" id={id} isFavorite={isFavorite} width={31} height={33}/>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

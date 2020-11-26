@@ -1,5 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {withDataLoading} from "../../hocks/with-data-loading";
 
 const Favorites = () => {
   return (
@@ -158,4 +160,10 @@ const Favorites = () => {
   );
 };
 
-export default Favorites;
+const mapStateToProps = ({USER}) => ({
+  isDataLoaded: USER.isUserStatusLoaded,
+  authorizationStatus: USER.authorizationStatus
+});
+
+export {Favorites};
+export default connect(mapStateToProps)(withDataLoading(Favorites));

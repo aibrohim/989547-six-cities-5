@@ -47,6 +47,16 @@ const appProcess = (state = initialState, action) => {
             isNearbyOffersLoaded: true,
           }
       );
+    case ActionType.START_LOADING:
+      return Object.assign(
+          {},
+          state,
+          {
+            isOfferLoaded: false,
+            isCommentsLoaded: false,
+            isNearbyOffersLoaded: false,
+          }
+      );
   }
 
   return state;

@@ -5,7 +5,7 @@ import {AuthorizationStatus} from "../../consts";
 import {connect} from "react-redux";
 
 const PrivateRoute = (props) => {
-  const {render, path, exact, authorizationStatus, type} = props;
+  const {render, path, exact, authorizationStatus, type, isUserStatusLoaded} = props;
   return (
     <Route
       path={path}
@@ -13,23 +13,25 @@ const PrivateRoute = (props) => {
       render={(routeProps) => {
         if (type === `toFavorites`) {
           return (
-            authorizationStatus === AuthorizationStatus.AUTH
+            authorizationStatus === AuthorizationStatus.AUTH || !(isUserStatusLoaded)
               ? render(routeProps)
               : <Redirect to={`/login`}/>
           );
+        } else {
+          return (
+            authorizationStatus === AuthorizationStatus.AUTH
+              ? <Redirect to={`/`}/>
+              : render(routeProps)
+          );
         }
-        return (
-          authorizationStatus === AuthorizationStatus.AUTH
-            ? <Redirect to={`/`}/>
-            : render(routeProps)
-        );
       }}
     />
   );
 };
 
 const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus
+  authorizationStatus: USER.authorizationStatus,
+  isUserStatusLoaded: USER.isUserStatusLoaded
 });
 
 PrivateRoute.propTypes = {
@@ -37,7 +39,8 @@ PrivateRoute.propTypes = {
   exact: propTypes.bool.isRequired,
   path: propTypes.string.isRequired,
   render: propTypes.func.isRequired,
-  type: propTypes.string.isRequired
+  type: propTypes.string.isRequired,
+  isUserStatusLoaded: propTypes.bool.isRequired
 };
 
 export {PrivateRoute};

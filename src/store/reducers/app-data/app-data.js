@@ -74,7 +74,9 @@ const initialState = {
   offers: [],
   activeSortType: sortTypes.POPULAR,
   allOffers: [],
-  isOffersLoaded: false
+  isOffersLoaded: false,
+  bookmarks: [],
+  areBookmarksLoaded: false
 };
 
 const appData = (state = initialState, action) => {
@@ -116,6 +118,15 @@ const appData = (state = initialState, action) => {
           state,
           {
             offers: updateOffers(state.offers, action.payload)
+          }
+      );
+    case ActionType.LOAD_BOOKMARKS:
+      return Object.assign(
+          {},
+          state,
+          {
+            bookmarks: action.payload,
+            areBookmarksLoaded: true
           }
       );
   }

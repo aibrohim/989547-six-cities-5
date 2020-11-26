@@ -3,12 +3,15 @@ export const ActionType = {
   SORT_OFFERS: `SORT_OFFERS`,
   HOVER_OFFER: `HOVER_OFFER`,
   LOAD_OFFERS: `LOAD_OFFERS`,
+  START_LOADING: `START_LOADING`,
   LOAD_COMMENTS: `LOAD_COMMENTS`,
   LOAD_OFFER: `LOAD_OFFER`,
   LOAD_NEARBY_OFFERS: `LOAD_NEARBY_OFFERS`,
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
+  NO_AUTHORIZATION: `NO_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
-  UPDATE_OFFERS: `UPDATE_OFFERS`
+  UPDATE_OFFERS: `UPDATE_OFFERS`,
+  LOAD_BOOKMARKS: `LOAD_BOOKMARKS`,
 };
 
 export const changeCity = (city) => ({
@@ -61,5 +64,12 @@ export const requireAuthorization = (status, data) => {
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
     userInfo: data
+  });
+};
+
+export const loadBookmarks = (bookmars) => {
+  return ({
+    type: ActionType.LOAD_BOOKMARKS,
+    payload: bookmars
   });
 };

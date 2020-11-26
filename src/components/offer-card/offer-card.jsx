@@ -2,8 +2,9 @@ import React from "react";
 import {Link} from "react-router-dom";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-import {hoverOffer} from "../../store/action.js";
+import {hoverOffer, startLoading} from "../../store/action.js";
 import {updateOfferBookmarkStatus} from "../../store/api-action";
+import BookmarkButton from "../../bookmarkButton/bookmarkButton";
 
 class OfferCard extends React.PureComponent {
   constructor(props) {
@@ -18,7 +19,7 @@ class OfferCard extends React.PureComponent {
   }
 
   render() {
-    const {onHoverOfferAction, className, block, offer} = this.props;
+    const {onHoverOfferAction, className, block, offer, } = this.props;
     const {id, isPremium, previewImg, cost, isFavorite, rate, title, type} = offer;
 
 
@@ -46,16 +47,7 @@ class OfferCard extends React.PureComponent {
               <b className="place-card__price-value">&euro;{cost}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <button className={
-              isFavorite
-                ? `place-card__bookmark-button place-card__bookmark-button--active button`
-                : `place-card__bookmark-button button`
-            } type="button" onClick={this.handleBookmarkClick}>
-              <svg className="place-card__bookmark-icon" width="18" height="19">
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <BookmarkButton name="place-card" id={id} isFavorite={isFavorite} width={18} height={19}/>
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
@@ -82,6 +74,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeBookmarkStatus(id, status) {
     dispatch(updateOfferBookmarkStatus(id, status));
+  },
+  startLoading() {
+    dispatch(startLoading());
   }
 });
 

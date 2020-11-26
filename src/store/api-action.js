@@ -1,4 +1,13 @@
-import {requireAuthorization, loadOffers, loadComments, loadOffer, loadNearbyOffers, redirectToRoute, updateOffers} from "./action.js";
+import {
+  requireAuthorization,
+  loadOffers,
+  loadComments,
+  loadOffer,
+  loadNearbyOffers,
+  redirectToRoute,
+  updateOffers,
+  loadBookmarks
+} from "./action.js";
 import {adaptOfferToClient, adaptReviewToClient} from "../utils.js";
 import {AuthorizationStatus} from "../consts";
 
@@ -68,7 +77,20 @@ export const getNearbyOffers = (id) => (dispatch, _getState, api) => {
 export const updateOfferBookmarkStatus = (id, status) => (dispatch, _getState, api) => {
   api.post(`/favorite/${id}/${status}`)
     .then(({data}) => dispatch(updateOffers(adaptOfferToClient(data))))
-    .then(({payload}) => dispatch(loadOffer(adaptOfferToClient(payload))))
+    .then(({payload}) => dispatch(loadOffer(payload)))
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const fetchBookmarks = () => (dispatch, _getState, api) => {
+  api.get(`/favorite`)
+    .then(({data}) => {
+      return data.map((offer) => adaptOfferToClient(offer));
+    })
+    .then((data) => {
+      dispatch(loadBookmarks(data));
+    })
     .catch((err) => {
       throw err;
     });

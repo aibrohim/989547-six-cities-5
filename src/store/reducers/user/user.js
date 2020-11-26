@@ -3,7 +3,8 @@ import {ActionType} from "../../action";
 
 const initialStatus = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  userInfo: {}
+  userInfo: {},
+  isUserStatusLoaded: false
 };
 
 const user = (state = initialStatus, action) => {
@@ -14,7 +15,8 @@ const user = (state = initialStatus, action) => {
           state,
           {
             authorizationStatus: action.payload,
-            userInfo: action.userInfo
+            userInfo: action.userInfo,
+            isUserStatusLoaded: true
           }
       );
   }

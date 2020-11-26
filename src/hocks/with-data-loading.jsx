@@ -1,6 +1,7 @@
 import React from "react";
 import Loader from "../components/loading/loading";
 import propTypes from "prop-types";
+import {AuthorizationStatus} from "../consts";
 
 export const withDataLoading = (Component) => {
   class WithDataLoading extends React.PureComponent {
@@ -12,9 +13,26 @@ export const withDataLoading = (Component) => {
       };
     }
 
+    componentDidMount() {
+      const {isOfferLoaded, isCommentsLoaded, isNearbyOffersLoaded, isDataLoaded} = this.props;
+
+      if (
+        (isOfferLoaded && isCommentsLoaded && isNearbyOffersLoaded)
+        || isDataLoaded
+      ) {
+        this.setState({
+          isDataLoading: false
+        });
+      }
+    }
+
     componentDidUpdate() {
-      const {isOfferLoaded, isCommentsLoaded, isNearbyOffersLoaded} = this.props;
-      if (isOfferLoaded && isCommentsLoaded && isNearbyOffersLoaded) {
+      const {isOfferLoaded, isCommentsLoaded, isNearbyOffersLoaded, isDataLoaded} = this.props;
+
+      if (
+        (isOfferLoaded && isCommentsLoaded && isNearbyOffersLoaded)
+        || isDataLoaded
+      ) {
         this.setState({
           isDataLoading: false
         });
@@ -30,9 +48,10 @@ export const withDataLoading = (Component) => {
   }
 
   WithDataLoading.propTypes = {
-    isOfferLoaded: propTypes.bool.isRequired,
-    isCommentsLoaded: propTypes.bool.isRequired,
-    isNearbyOffersLoaded: propTypes.bool.isRequired
+    isOfferLoaded: propTypes.bool,
+    isCommentsLoaded: propTypes.bool,
+    isNearbyOffersLoaded: propTypes.bool,
+    isDataLoaded: propTypes.bool
   };
 
   return WithDataLoading;

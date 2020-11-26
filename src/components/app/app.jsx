@@ -6,11 +6,11 @@ import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import Offer from "../offer/offer";
 import {connect} from "react-redux";
-import {getComments, getOfferById, getNearbyOffers, fetchOffersList} from "../../store/api-action.js";
+import {getComments, getOfferById, getNearbyOffers, fetchOffersList, fetchBookmarks} from "../../store/api-action.js";
 import PrivateRoute from "../private-route/private-route";
 import browserHistory from "../../browser-history";
 
-const App = ({loadComments, loadOffer, loadNearbyOffers, loadOffers}) => {
+const App = ({loadComments, loadOffer, loadNearbyOffers, loadOffers, loadBookmars}) => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -24,6 +24,7 @@ const App = ({loadComments, loadOffer, loadNearbyOffers, loadOffers}) => {
           redirectTo="/login"
           type="toFavorites"
           render={() => {
+            loadBookmars();
             return <Favorites />;
           }}
         />
@@ -52,7 +53,8 @@ App.propTypes = {
   loadComments: propTypes.func.isRequired,
   loadOffer: propTypes.func.isRequired,
   loadNearbyOffers: propTypes.func.isRequired,
-  loadOffers: propTypes.func.isRequired
+  loadOffers: propTypes.func.isRequired,
+  loadBookmars: propTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -67,9 +69,16 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadOffers() {
     dispatch(fetchOffersList());
+  },
+  loadBookmars() {
+    dispatch(fetchBookmarks());
   }
 });
 
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus
+});
+
 export {App};
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
