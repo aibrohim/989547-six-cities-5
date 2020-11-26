@@ -8,9 +8,11 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import App from "./components/app/app";
 import rootReducer from "./store/reducers/root-reducer";
 import {requireAuthorization} from "./store/action";
-import {fetchOffersList, checkAuth} from "./store/api-action.js";
+import {checkAuth} from "./store/api-action.js";
 import {AuthorizationStatus} from "./consts";
 import {redirect} from "./store/middleware/redirect";
+import Loading from "./components/loading/loading";
+import Error from "./components/error/error";
 
 const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -24,8 +26,12 @@ const store = createStore(
     )
 );
 
+ReactDom.render(
+    <Loading />,
+    document.querySelector(`#root`)
+);
+
 Promise.all([
-  store.dispatch(fetchOffersList()),
   store.dispatch(checkAuth())
 ])
   .then(() => {
@@ -35,5 +41,14 @@ Promise.all([
         </Provider>,
         document.querySelector(`#root`)
     );
+  })
+  .catch((err) => {
+    ReactDom.render(
+        <Provider store={store}>
+          <Error />
+        </Provider>,
+        document.querySelector(`#root`)
+    );
+    throw err;
   });
 

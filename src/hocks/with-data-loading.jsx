@@ -6,7 +6,6 @@ export const withDataLoading = (Component) => {
   class WithDataLoading extends React.PureComponent {
     constructor(props) {
       super(props);
-      this.prevOffer = this.props.offer;
 
       this.state = {
         isDataLoading: true
@@ -14,14 +13,8 @@ export const withDataLoading = (Component) => {
     }
 
     componentDidUpdate() {
-      document.documentElement.scrollTop = 0;
-      const isOfferAvailable = Boolean(Array.from(Object.entries(this.props.offer)).length >= 1);
-      if (this.prevOffer.id === this.props.offer.id) {
-        this.setState({
-          isLoading: true
-        });
-      }
-      if (isOfferAvailable && this.props.comments && this.props.nearbyHotels.length > 1) {
+      const {isOfferLoaded, isCommentsLoaded, isNearbyOffersLoaded} = this.props;
+      if (isOfferLoaded && isCommentsLoaded && isNearbyOffersLoaded) {
         this.setState({
           isDataLoading: false
         });
@@ -37,9 +30,9 @@ export const withDataLoading = (Component) => {
   }
 
   WithDataLoading.propTypes = {
-    offer: propTypes.object.isRequired,
-    comments: propTypes.array.isRequired,
-    nearbyHotels: propTypes.array.isRequired
+    isOfferLoaded: propTypes.bool.isRequired,
+    isCommentsLoaded: propTypes.bool.isRequired,
+    isNearbyOffersLoaded: propTypes.bool.isRequired
   };
 
   return WithDataLoading;

@@ -164,7 +164,10 @@ const mapStateToProps = ({PROCESS, USER}) => ({
   offer: PROCESS.activeOffer,
   comments: PROCESS.comments,
   nearbyHotels: PROCESS.nearbyHotels,
-  authorizationStatus: USER.authorizationStatus
+  authorizationStatus: USER.authorizationStatus,
+  isOfferLoaded: PROCESS.isOfferLoaded,
+  isCommentsLoaded: PROCESS.isCommentsLoaded,
+  isNearbyOffersLoaded: PROCESS.isNearbyOffersLoaded,
 });
 
 export {Offer};
