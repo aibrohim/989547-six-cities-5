@@ -57,6 +57,14 @@ const appProcess = (state = initialState, action) => {
             isNearbyOffersLoaded: false,
           }
       );
+    case ActionType.POST_COMMENT:
+      return Object.assign(
+          {},
+          state,
+          {
+            comments: action.payload
+          }
+      );
   }
 
   return state;

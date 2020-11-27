@@ -1,4 +1,7 @@
 import React from "react";
+import {postComment} from "../../store/api-action";
+import {connect} from "react-redux";
+import propTypes from "prop-types";
 
 class CommentForm extends React.PureComponent {
   constructor(props) {
@@ -15,6 +18,16 @@ class CommentForm extends React.PureComponent {
 
   handleFormSubmit(evt) {
     evt.preventDefault();
+    const adaptedComment = Object.assign(
+        {},
+        this.state,
+        {
+          comment: this.state.review
+        }
+    );
+
+    delete adaptedComment.review;
+    this.props.postCommentAction(this.props.id, adaptedComment);
   }
 
   handleFieldChange(evt) {
@@ -77,4 +90,16 @@ class CommentForm extends React.PureComponent {
   }
 }
 
-export default CommentForm;
+const mapDispatchToProps = (dispatch) => ({
+  postCommentAction(id, commentInfo) {
+    dispatch(postComment(id, commentInfo));
+  }
+});
+
+CommentForm.propTypes = {
+  postCommentAction: propTypes.func,
+  id: propTypes.number.isRequired
+};
+
+export {CommentForm};
+export default connect(null, mapDispatchToProps)(CommentForm);

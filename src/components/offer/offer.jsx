@@ -1,5 +1,5 @@
 import React from "react";
-import CommentForm from "../comment/comment";
+import CommentForm from "../comment-form/comment-form";
 import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
@@ -29,7 +29,7 @@ const Offer = (props) => {
 
   const commentComponent = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
-      return <CommentForm />;
+      return <CommentForm id={id}/>;
     }
     return null;
   };

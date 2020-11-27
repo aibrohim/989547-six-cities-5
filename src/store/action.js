@@ -13,6 +13,7 @@ export const ActionType = {
   UPDATE_OFFERS: `UPDATE_OFFERS`,
   LOAD_BOOKMARKS: `LOAD_BOOKMARKS`,
   UPDATE_BOOKMARKS: `UPDATE_BOOKMARKS`,
+  POST_COMMENT: `POST_COMMENT`,
 };
 
 export const changeCity = (city) => ({
@@ -73,7 +74,12 @@ export const requireAuthorization = (status, data) => {
   });
 };
 
-export const loadBookmarks = (bookmars) => ({
+export const loadBookmarks = (bookmarks) => ({
   type: ActionType.LOAD_BOOKMARKS,
-  payload: bookmars
+  payload: bookmarks
+});
+
+export const pushComment = (comment) => ({
+  type: ActionType.POST_COMMENT,
+  payload: comment
 });

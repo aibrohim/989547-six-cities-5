@@ -7,7 +7,8 @@ import {
   redirectToRoute,
   updateOffers,
   loadBookmarks,
-  updateBookmarks
+  updateBookmarks,
+  pushComment
 } from "./action.js";
 import {adaptOfferToClient, adaptReviewToClient} from "../utils.js";
 import {AuthorizationStatus} from "../consts";
@@ -96,4 +97,12 @@ export const fetchBookmarks = () => (dispatch, _getState, api) => {
     .catch((err) => {
       throw err;
     });
+};
+
+export const postComment = (id, {comment, rating}) => (dispatch, _getState, api) => {
+  api.post(`/comments/${id}`, {comment, rating})
+    .then(({data}) => {
+      return data.map((review) => adaptReviewToClient(review));
+    })
+    .then((data) => dispatch(pushComment(data)));
 };
