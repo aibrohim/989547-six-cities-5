@@ -21,7 +21,7 @@ const getCities = (offers) => {
   return Array.from(citiesList);
 };
 
-const getOffersByCity = (offers) => {
+export const getOffersByCity = (offers) => {
   const cities = getCities(offers);
 
   const offersByCityMap = new Map(
@@ -58,12 +58,25 @@ const sortCities = (offersList, type, allOffers, city) => {
   }
 };
 
+const updateOffers = (offers, updatedOffer) => {
+  const updateOfferIndex = offers.findIndex((offer) => offer.id === updatedOffer.id);
+  offers = [
+    ...offers.slice(0, updateOfferIndex),
+    updatedOffer,
+    ...offers.slice(updateOfferIndex + 1)
+  ];
+  return offers;
+};
+
 const initialState = {
   cities: [],
   activeCity: ``,
   offers: [],
   activeSortType: sortTypes.POPULAR,
   allOffers: [],
+  isOffersLoaded: false,
+  bookmarks: [],
+  areBookmarksLoaded: false
 };
 
 const appData = (state = initialState, action) => {
@@ -77,7 +90,8 @@ const appData = (state = initialState, action) => {
             cities: getCities(action.payload),
             activeCity: firstNotEmptyCity,
             allOffers: action.payload,
-            offers: getOffersByCity(action.payload).get(firstNotEmptyCity)
+            offers: getOffersByCity(action.payload).get(firstNotEmptyCity),
+            isOffersLoaded: true
           }
       );
     case ActionType.CITY_CHANGE:
@@ -96,6 +110,31 @@ const appData = (state = initialState, action) => {
           {
             activeSortType: action.payload,
             offers: sortCities(state.offers, action.payload, state.allOffers, state.activeCity)
+          }
+      );
+    case ActionType.UPDATE_OFFERS:
+      return Object.assign(
+          {},
+          state,
+          {
+            offers: updateOffers(state.offers, action.payload)
+          }
+      );
+    case ActionType.LOAD_BOOKMARKS:
+      return Object.assign(
+          {},
+          state,
+          {
+            bookmarks: action.payload,
+            areBookmarksLoaded: true
+          }
+      );
+    case ActionType.UPDATE_BOOKMARKS:
+      return Object.assign(
+          {},
+          state,
+          {
+            bookmarks: updateOffers(state.bookmarks, action.payload)
           }
       );
   }

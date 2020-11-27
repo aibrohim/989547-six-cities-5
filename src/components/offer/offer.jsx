@@ -1,5 +1,5 @@
 import React from "react";
-import CommentForm from "../comment/comment";
+import CommentForm from "../comment-form/comment-form";
 import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
@@ -7,10 +7,14 @@ import NearOffersList from "../near-offers-list/near-offers-list";
 import {withDataLoading} from "../../hocks/with-data-loading";
 import {connect} from "react-redux";
 import classNames from "classnames";
+import {Link} from "react-router-dom";
+import UserNav from "../user-nav/user-nav";
+import {AuthorizationStatus} from "../../consts";
+import BookmarkButton from "../../bookmarkButton/bookmarkButton";
 
 const Offer = (props) => {
-  const {offer, comments, nearbyHotels} = props;
-  const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host} = offer;
+  const {offer, comments, nearbyHotels, authorizationStatus} = props;
+  const {isPremium, description, bedrooms, adults, cost, isFavorite, rate, title, type, host, id} = offer;
   const {avatarUrl, name, isPro} = host;
 
   const images = offer.images.map((image, index) => ({
@@ -23,6 +27,13 @@ const Offer = (props) => {
     id: index
   }));
 
+  const commentComponent = () => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      return <CommentForm id={id}/>;
+    }
+    return null;
+  };
+
 
   return (
     <div className="page">
@@ -30,21 +41,11 @@ const Offer = (props) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to="/">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              </Link>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <UserNav />
           </div>
         </div>
       </header>
@@ -71,14 +72,7 @@ const Offer = (props) => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={isFavorite === true
-                  ? `property__bookmark-button property__bookmark-button--active button`
-                  : `property__bookmark-button button`} type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkButton name="property" id={id} isFavorite={isFavorite} width={31} height={33}/>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -92,7 +86,7 @@ const Offer = (props) => {
                   {type.charAt(0).toUpperCase() + type.slice(1)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {rooms} Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
                   Max {adults} adults
@@ -134,7 +128,7 @@ const Offer = (props) => {
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
 
                 <ReviewsList comments={comments}/>
-                <CommentForm />
+                {commentComponent()}
               </section>
             </div>
           </div>
@@ -156,13 +150,16 @@ const Offer = (props) => {
 Offer.propTypes = {
   offer: propTypes.object.isRequired,
   comments: propTypes.array.isRequired,
-  nearbyHotels: propTypes.array.isRequired
+  nearbyHotels: propTypes.array.isRequired,
+  authorizationStatus: propTypes.string.isRequired
 };
 
-const mapStateToProps = ({PROCESS}) => ({
+const mapStateToProps = ({PROCESS, USER}) => ({
   offer: PROCESS.activeOffer,
   comments: PROCESS.comments,
-  nearbyHotels: PROCESS.nearbyHotels
+  nearbyHotels: PROCESS.nearbyHotels,
+  authorizationStatus: USER.authorizationStatus,
+  isDataLoaded: PROCESS.isOfferLoaded && PROCESS.isCommentsLoaded && PROCESS.isNearbyOffersLoaded,
 });
 
 export {Offer};

@@ -1,5 +1,17 @@
-import {loadOffers, loadComments, loadOffer, loadNearbyOffers} from "./action.js";
+import {
+  requireAuthorization,
+  loadOffers,
+  loadComments,
+  loadOffer,
+  loadNearbyOffers,
+  redirectToRoute,
+  updateOffers,
+  loadBookmarks,
+  updateBookmarks,
+  pushComment
+} from "./action.js";
 import {adaptOfferToClient, adaptReviewToClient} from "../utils.js";
+import {AuthorizationStatus} from "../consts";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -11,7 +23,27 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
   .then((data) => {
     return dispatch(loadOffers(data));
   })
+  .catch((err) => {
+    throw err;
+  })
 );
+
+export const checkAuth = () => (dispatch, _getState, api) => {
+  api.get(`/login`)
+    .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, data)))
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const login = ({login: email, password}) => (dispatch, _getState, api) => {
+  api.post(`/login`, {email, password})
+    .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, data)))
+    .then(() => dispatch(redirectToRoute(`/`)))
+    .catch((err) => {
+      throw err;
+    });
+};
 
 export const getComments = (id) => (dispatch, _getState, api) => {
   api.get(`/comments/${id}`)
@@ -25,6 +57,9 @@ export const getOfferById = (id) => (dispatch, _getState, api) => {
   api.get(`/hotels/${id}`)
   .then(({data}) => {
     return dispatch(loadOffer(adaptOfferToClient(data)));
+  })
+  .catch((err) => {
+    throw err;
   });
 };
 
@@ -35,5 +70,39 @@ export const getNearbyOffers = (id) => (dispatch, _getState, api) => {
   })
   .then((data) => {
     dispatch(loadNearbyOffers(data));
+  })
+  .catch((err) => {
+    throw err;
   });
+};
+
+export const updateOfferBookmarkStatus = (id, status) => (dispatch, _getState, api) => {
+  api.post(`/favorite/${id}/${status}`)
+    .then(({data}) => dispatch(updateOffers(adaptOfferToClient(data))))
+    .then(({payload}) => dispatch(loadOffer(payload)))
+    .then(({payload}) => dispatch(updateBookmarks(payload)))
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const fetchBookmarks = () => (dispatch, _getState, api) => {
+  api.get(`/favorite`)
+    .then(({data}) => {
+      return data.map((offer) => adaptOfferToClient(offer));
+    })
+    .then((data) => {
+      dispatch(loadBookmarks(data));
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const postComment = (id, {comment, rating}) => (dispatch, _getState, api) => {
+  api.post(`/comments/${id}`, {comment, rating})
+    .then(({data}) => {
+      return data.map((review) => adaptReviewToClient(review));
+    })
+    .then((data) => dispatch(pushComment(data)));
 };

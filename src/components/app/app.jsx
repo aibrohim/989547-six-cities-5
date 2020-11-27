@@ -1,26 +1,42 @@
 import React from "react";
 import propTypes from "prop-types";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {Router as BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import Offer from "../offer/offer";
 import {connect} from "react-redux";
-import {getComments, getOfferById, getNearbyOffers} from "../../store/api-action.js";
+import {getComments, getOfferById, getNearbyOffers, fetchOffersList, fetchBookmarks} from "../../store/api-action.js";
+import PrivateRoute from "../private-route/private-route";
+import browserHistory from "../../browser-history";
 
-const App = ({loadComments, loadOffer, loadNearbyOffers}) => {
+const App = ({loadComments, loadOffer, loadNearbyOffers, loadOffers, loadBookmars}) => {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/">
-          <Main/>
-        </Route>
-        <Route exact path="/favorites">
-          <Favorites />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
+        <Route exact path="/" render={() => {
+          loadOffers();
+          return <Main/>;
+        }} />
+        <PrivateRoute
+          exact
+          path="/favorites"
+          redirectTo="/login"
+          type="toFavorites"
+          render={() => {
+            loadBookmars();
+            return <Favorites />;
+          }}
+        />
+        <PrivateRoute
+          exact
+          path="/login"
+          redirectTo="/"
+          type="toLogin"
+          render={() => {
+            return <Login />;
+          }}
+        />
         <Route path="/offer/:id" exact render={({match}) => {
           const pathId = match.params.id;
           loadOffer(+pathId);
@@ -36,7 +52,9 @@ const App = ({loadComments, loadOffer, loadNearbyOffers}) => {
 App.propTypes = {
   loadComments: propTypes.func.isRequired,
   loadOffer: propTypes.func.isRequired,
-  loadNearbyOffers: propTypes.func
+  loadNearbyOffers: propTypes.func.isRequired,
+  loadOffers: propTypes.func.isRequired,
+  loadBookmars: propTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -48,9 +66,19 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadNearbyOffers(id) {
     dispatch(getNearbyOffers(id));
+  },
+  loadOffers() {
+    dispatch(fetchOffersList());
+  },
+  loadBookmars() {
+    dispatch(fetchBookmarks());
   }
 });
 
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus
+});
+
 export {App};
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 

@@ -5,6 +5,9 @@ const initialState = {
   comments: [],
   activeOffer: {},
   nearbyHotels: [],
+  isOfferLoaded: false,
+  isCommentsLoaded: false,
+  isNearbyOffersLoaded: false,
 };
 
 const appProcess = (state = initialState, action) => {
@@ -22,7 +25,8 @@ const appProcess = (state = initialState, action) => {
           {},
           state,
           {
-            comments: action.payload
+            comments: action.payload,
+            isCommentsLoaded: true
           }
       );
     case ActionType.LOAD_OFFER:
@@ -30,7 +34,8 @@ const appProcess = (state = initialState, action) => {
           {},
           state,
           {
-            activeOffer: action.payload
+            activeOffer: action.payload,
+            isOfferLoaded: true
           }
       );
     case ActionType.LOAD_NEARBY_OFFERS:
@@ -38,7 +43,26 @@ const appProcess = (state = initialState, action) => {
           {},
           state,
           {
-            nearbyHotels: action.payload
+            nearbyHotels: action.payload,
+            isNearbyOffersLoaded: true,
+          }
+      );
+    case ActionType.START_LOADING:
+      return Object.assign(
+          {},
+          state,
+          {
+            isOfferLoaded: false,
+            isCommentsLoaded: false,
+            isNearbyOffersLoaded: false,
+          }
+      );
+    case ActionType.POST_COMMENT:
+      return Object.assign(
+          {},
+          state,
+          {
+            comments: action.payload
           }
       );
   }
