@@ -35,7 +35,13 @@ export const withDataLoading = (Component) => {
       }
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+      if (prevProps.pathId !== this.props.pathId) {
+        const {loadOffer, loadComments, loadNearbyOffers, pathId} = this.props;
+        loadOffer(+pathId);
+        loadComments(+pathId);
+        loadNearbyOffers(+pathId);
+      }
       const {isDataLoaded} = this.props;
       if (!(browserHistory.location.pathname === `/favorites`)) {
         document.documentElement.scrollTop = 0;
