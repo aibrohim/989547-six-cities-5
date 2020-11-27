@@ -1,10 +1,11 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {withDataLoading} from "../../hocks/with-data-loading";
 import BookmarkCard from "../offer-card-bookmark/offer-card-bookmark";
 import {getOffersByCity} from "../../store/reducers/app-data/app-data";
 import propTypes from "prop-types";
+import classNames from "classnames";
 
 const Favorites = (props) => {
   const bookmarks = getOffersByCity(props.bookmarks);
@@ -23,6 +24,52 @@ const Favorites = (props) => {
     });
     return favoritesContainer;
   };
+
+  const renderContent = () => {
+    if (bookmarks.size === 0) {
+      return (
+        <Fragment>
+          <h1 className="visually-hidden">Favorites (empty)</h1>
+          <div className="favorites__status-wrapper">
+            <b className="favorites__status">Nothing yet saved.</b>
+            <p className="favorites__status-description">Save properties to narrow down search or plan yor future trips.</p>
+          </div>
+        </Fragment>
+      );
+    }
+    return (
+      <Fragment>
+        <h1 className="favorites__title">Saved listing</h1>
+        <ul className="favorites__list">
+          {favorites().map((offersByCity) => {
+            return (
+              <li key={offersByCity.id} className="favorites__locations-items">
+                <div className="favorites__locations locations locations--current">
+                  <div className="locations__item">
+                    <a className="locations__item-link" href="#">
+                      <span>{offersByCity.city}</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="favorites__places">
+                  {
+                    offersByCity.offers.map((offer) => {
+                      return <BookmarkCard key={offer.id} offer={offer}/>;
+                    })
+                  }
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </Fragment>
+    );
+  };
+
+  const mainSectionClass = bookmarks.size === 0
+    ? `favorites--empty`
+    : ``;
+
   return (
     <div className="page">
       <header className="header">
@@ -49,30 +96,8 @@ const Favorites = (props) => {
       </header>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {favorites().map((offersByCity) => {
-                return (
-                  <li key={offersByCity.id} className="favorites__locations-items">
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <a className="locations__item-link" href="#">
-                          <span>{offersByCity.city}</span>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="favorites__places">
-                      {
-                        offersByCity.offers.map((offer) => {
-                          return <BookmarkCard key={offer.id} offer={offer}/>;
-                        })
-                      }
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+          <section className={classNames(`favorites`, mainSectionClass)}>
+            {renderContent()}
           </section>
         </div>
       </main>
