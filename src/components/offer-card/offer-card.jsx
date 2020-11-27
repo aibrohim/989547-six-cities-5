@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-import {hoverOffer, startLoading} from "../../store/action.js";
+import {hoverOffer} from "../../store/action.js";
 import {updateOfferBookmarkStatus} from "../../store/api-action";
 import BookmarkButton from "../../bookmarkButton/bookmarkButton";
 
@@ -19,7 +19,7 @@ class OfferCard extends React.PureComponent {
   }
 
   render() {
-    const {onHoverOfferAction, className, block, offer, } = this.props;
+    const {onHoverOfferAction, className, block, offer, imgWidth, imgHeight} = this.props;
     const {id, isPremium, previewImg, cost, isFavorite, rate, title, type} = offer;
 
 
@@ -38,7 +38,7 @@ class OfferCard extends React.PureComponent {
             pathname: `/offer/${id}`,
             offer
           }}>
-            <img className="place-card__image" src={previewImg} width="260" height="200"/>
+            <img className="place-card__image" src={previewImg} width={imgWidth} height={imgHeight} />
           </Link>
         </div>
         <div className="place-card__info">
@@ -61,7 +61,7 @@ class OfferCard extends React.PureComponent {
               offer
             }}>{title}</Link>
           </h2>
-          <p className="place-card__type">{type}</p>
+          <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
         </div>
       </article>
     );
@@ -74,9 +74,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeBookmarkStatus(id, status) {
     dispatch(updateOfferBookmarkStatus(id, status));
-  },
-  startLoading() {
-    dispatch(startLoading());
   }
 });
 
@@ -85,7 +82,9 @@ OfferCard.propTypes = {
   className: propTypes.string.isRequired,
   block: propTypes.string.isRequired,
   onHoverOfferAction: propTypes.func,
-  changeBookmarkStatus: propTypes.func.isRequired
+  changeBookmarkStatus: propTypes.func.isRequired,
+  imgWidth: propTypes.string,
+  imgHeight: propTypes.string
 };
 
 export {OfferCard};

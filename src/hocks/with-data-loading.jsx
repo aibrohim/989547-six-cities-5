@@ -1,7 +1,6 @@
 import React from "react";
 import Loader from "../components/loading/loading";
 import propTypes from "prop-types";
-import {AuthorizationStatus} from "../consts";
 
 export const withDataLoading = (Component) => {
   class WithDataLoading extends React.PureComponent {
@@ -14,12 +13,9 @@ export const withDataLoading = (Component) => {
     }
 
     componentDidMount() {
-      const {isOfferLoaded, isCommentsLoaded, isNearbyOffersLoaded, isDataLoaded} = this.props;
+      const {isDataLoaded} = this.props;
 
-      if (
-        (isOfferLoaded && isCommentsLoaded && isNearbyOffersLoaded)
-        || isDataLoaded
-      ) {
+      if (isDataLoaded) {
         this.setState({
           isDataLoading: false
         });
@@ -27,12 +23,9 @@ export const withDataLoading = (Component) => {
     }
 
     componentDidUpdate() {
-      const {isOfferLoaded, isCommentsLoaded, isNearbyOffersLoaded, isDataLoaded} = this.props;
-
-      if (
-        (isOfferLoaded && isCommentsLoaded && isNearbyOffersLoaded)
-        || isDataLoaded
-      ) {
+      const {isDataLoaded} = this.props;
+      document.documentElement.scrollTop = 0;
+      if (isDataLoaded) {
         this.setState({
           isDataLoading: false
         });
@@ -48,9 +41,6 @@ export const withDataLoading = (Component) => {
   }
 
   WithDataLoading.propTypes = {
-    isOfferLoaded: propTypes.bool,
-    isCommentsLoaded: propTypes.bool,
-    isNearbyOffersLoaded: propTypes.bool,
     isDataLoaded: propTypes.bool
   };
 

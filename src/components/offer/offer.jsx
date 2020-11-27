@@ -14,7 +14,7 @@ import BookmarkButton from "../../bookmarkButton/bookmarkButton";
 
 const Offer = (props) => {
   const {offer, comments, nearbyHotels, authorizationStatus} = props;
-  const {isPremium, description, rooms, adults, cost, isFavorite, rate, title, type, host, id} = offer;
+  const {isPremium, description, bedrooms, adults, cost, isFavorite, rate, title, type, host, id} = offer;
   const {avatarUrl, name, isPro} = host;
 
   const images = offer.images.map((image, index) => ({
@@ -86,7 +86,7 @@ const Offer = (props) => {
                   {type.charAt(0).toUpperCase() + type.slice(1)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {rooms} Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
                   Max {adults} adults
@@ -159,9 +159,7 @@ const mapStateToProps = ({PROCESS, USER}) => ({
   comments: PROCESS.comments,
   nearbyHotels: PROCESS.nearbyHotels,
   authorizationStatus: USER.authorizationStatus,
-  isOfferLoaded: PROCESS.isOfferLoaded,
-  isCommentsLoaded: PROCESS.isCommentsLoaded,
-  isNearbyOffersLoaded: PROCESS.isNearbyOffersLoaded,
+  isDataLoaded: PROCESS.isOfferLoaded && PROCESS.isCommentsLoaded && PROCESS.isNearbyOffersLoaded,
 });
 
 export {Offer};

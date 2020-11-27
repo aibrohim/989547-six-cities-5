@@ -8,7 +8,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import App from "./components/app/app";
 import rootReducer from "./store/reducers/root-reducer";
 import {requireAuthorization} from "./store/action";
-import {checkAuth, fetchBookmarks} from "./store/api-action.js";
+import {checkAuth} from "./store/api-action.js";
 import {AuthorizationStatus} from "./consts";
 import {redirect} from "./store/middleware/redirect";
 import Loading from "./components/loading/loading";

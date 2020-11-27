@@ -6,7 +6,8 @@ import {
   loadNearbyOffers,
   redirectToRoute,
   updateOffers,
-  loadBookmarks
+  loadBookmarks,
+  updateBookmarks
 } from "./action.js";
 import {adaptOfferToClient, adaptReviewToClient} from "../utils.js";
 import {AuthorizationStatus} from "../consts";
@@ -78,6 +79,7 @@ export const updateOfferBookmarkStatus = (id, status) => (dispatch, _getState, a
   api.post(`/favorite/${id}/${status}`)
     .then(({data}) => dispatch(updateOffers(adaptOfferToClient(data))))
     .then(({payload}) => dispatch(loadOffer(payload)))
+    .then(({payload}) => dispatch(updateBookmarks(payload)))
     .catch((err) => {
       throw err;
     });

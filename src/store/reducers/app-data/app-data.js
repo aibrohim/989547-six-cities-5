@@ -21,7 +21,7 @@ const getCities = (offers) => {
   return Array.from(citiesList);
 };
 
-const getOffersByCity = (offers) => {
+export const getOffersByCity = (offers) => {
   const cities = getCities(offers);
 
   const offersByCityMap = new Map(
@@ -127,6 +127,14 @@ const appData = (state = initialState, action) => {
           {
             bookmarks: action.payload,
             areBookmarksLoaded: true
+          }
+      );
+    case ActionType.UPDATE_BOOKMARKS:
+      return Object.assign(
+          {},
+          state,
+          {
+            bookmarks: updateOffers(state.bookmarks, action.payload)
           }
       );
   }

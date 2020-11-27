@@ -12,6 +12,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   UPDATE_OFFERS: `UPDATE_OFFERS`,
   LOAD_BOOKMARKS: `LOAD_BOOKMARKS`,
+  UPDATE_BOOKMARKS: `UPDATE_BOOKMARKS`,
 };
 
 export const changeCity = (city) => ({
@@ -59,6 +60,11 @@ export const updateOffers = (offer) => ({
   payload: offer
 });
 
+export const updateBookmarks = (offer) => ({
+  type: ActionType.UPDATE_BOOKMARKS,
+  payload: offer
+});
+
 export const requireAuthorization = (status, data) => {
   return ({
     type: ActionType.REQUIRED_AUTHORIZATION,
@@ -67,9 +73,7 @@ export const requireAuthorization = (status, data) => {
   });
 };
 
-export const loadBookmarks = (bookmars) => {
-  return ({
-    type: ActionType.LOAD_BOOKMARKS,
-    payload: bookmars
-  });
-};
+export const loadBookmarks = (bookmars) => ({
+  type: ActionType.LOAD_BOOKMARKS,
+  payload: bookmars
+});
