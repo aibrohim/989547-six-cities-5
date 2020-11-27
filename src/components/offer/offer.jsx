@@ -10,7 +10,8 @@ import classNames from "classnames";
 import {Link} from "react-router-dom";
 import UserNav from "../user-nav/user-nav";
 import {AuthorizationStatus} from "../../consts";
-import BookmarkButton from "../../bookmarkButton/bookmarkButton";
+import BookmarkButton from "../bookmarkButton/bookmarkButton";
+import {getComments, getNearbyOffers, getOfferById} from "../../store/api-action";
 
 const Offer = (props) => {
   const {offer, comments, nearbyHotels, authorizationStatus} = props;
@@ -162,5 +163,17 @@ const mapStateToProps = ({PROCESS, USER}) => ({
   isDataLoaded: PROCESS.isOfferLoaded && PROCESS.isCommentsLoaded && PROCESS.isNearbyOffersLoaded,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  loadComments(id) {
+    dispatch(getComments(id));
+  },
+  loadOffer(id) {
+    dispatch(getOfferById(id));
+  },
+  loadNearbyOffers(id) {
+    dispatch(getNearbyOffers(id));
+  },
+});
+
 export {Offer};
-export default connect(mapStateToProps)(withDataLoading(Offer));
+export default connect(mapStateToProps, mapDispatchToProps)(withDataLoading(Offer));

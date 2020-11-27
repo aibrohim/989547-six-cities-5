@@ -4,7 +4,7 @@ import propTypes from "prop-types";
 import {connect} from "react-redux";
 import {hoverOffer} from "../../store/action.js";
 import {updateOfferBookmarkStatus} from "../../store/api-action";
-import BookmarkButton from "../../bookmarkButton/bookmarkButton";
+import BookmarkButton from "../bookmarkButton/bookmarkButton";
 
 class OfferCard extends React.PureComponent {
   constructor(props) {
