@@ -12,6 +12,8 @@ import {
 } from "./action.js";
 import {adaptOfferToClient, adaptReviewToClient} from "../utils.js";
 import {AuthorizationStatus} from "../consts";
+import {HttpCode} from "../services/api";
+import browserHistory from "../browser-history";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -82,6 +84,9 @@ export const updateOfferBookmarkStatus = (id, status) => (dispatch, _getState, a
     .then(({payload}) => dispatch(loadOffer(payload)))
     .then(({payload}) => dispatch(updateBookmarks(payload)))
     .catch((err) => {
+      if (err.response.status === HttpCode.UNAUTHORIZED) {
+        browserHistory.push(`/login`);
+      }
       throw err;
     });
 };
