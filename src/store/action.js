@@ -13,6 +13,8 @@ export const ActionType = {
   LOAD_BOOKMARKS: `LOAD_BOOKMARKS`,
   UPDATE_BOOKMARKS: `UPDATE_BOOKMARKS`,
   POST_COMMENT: `POST_COMMENT`,
+  CHANGE_COMMENT_POST_STATUS: `CHANGE_COMMENT_POST_STATUS`,
+  ERROR_HAPPENED: `ERROR_HAPPENED`
 };
 
 export const changeCity = (city) => ({
@@ -73,6 +75,10 @@ export const requireAuthorization = (status, data) => {
   });
 };
 
+export const errorHappened = () => ({
+  type: ActionType.ERROR_HAPPENED
+});
+
 export const loadBookmarks = (bookmarks) => ({
   type: ActionType.LOAD_BOOKMARKS,
   payload: bookmarks
@@ -81,4 +87,9 @@ export const loadBookmarks = (bookmarks) => ({
 export const pushComment = (comment) => ({
   type: ActionType.POST_COMMENT,
   payload: comment
+});
+
+export const changeCommentPostStatus = (status) => ({
+  type: ActionType.CHANGE_COMMENT_POST_STATUS,
+  payload: status
 });

@@ -14,7 +14,8 @@ export const withDataLoading = (Component) => {
 
     componentDidMount() {
       if (this.props.loadOffer && this.props.loadComments && this.props.loadNearbyOffers) {
-        const {loadOffer, loadComments, loadNearbyOffers, pathId} = this.props;
+        const {loadOffer, loadComments, loadNearbyOffers, pathId, discardHoveredOffer} = this.props;
+        discardHoveredOffer();
         loadOffer(+pathId);
         loadComments(+pathId);
         loadNearbyOffers(+pathId);
@@ -36,11 +37,12 @@ export const withDataLoading = (Component) => {
 
     componentDidUpdate(prevProps) {
       if (prevProps.pathId !== this.props.pathId) {
-        const {loadOffer, loadComments, loadNearbyOffers, pathId} = this.props;
+        const {loadOffer, loadComments, loadNearbyOffers, pathId, discardHoveredOffer} = this.props;
         document.documentElement.scrollTop = 0;
         loadOffer(+pathId);
         loadComments(+pathId);
         loadNearbyOffers(+pathId);
+        discardHoveredOffer();
       }
       const {isDataLoaded} = this.props;
       if (isDataLoaded) {
@@ -65,7 +67,8 @@ export const withDataLoading = (Component) => {
     loadNearbyOffers: propTypes.func,
     loadBookmarks: propTypes.func,
     loadOffers: propTypes.func,
-    pathId: propTypes.string
+    pathId: propTypes.string,
+    discardHoveredOffer: propTypes.func
   };
 
   return WithDataLoading;

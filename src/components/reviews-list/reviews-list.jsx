@@ -3,12 +3,16 @@ import Review from "../review/review.jsx";
 import propTypes from "prop-types";
 
 const ReviewsList = ({comments}) => {
+  const MAX_COMMENTS_COUNT = 10;
   return (
     <ul className="reviews__list">
-      {comments.map((comment) => {
-        return (
-          <Review key={comment.id} review={comment}/>
-        );
+      {comments.map((comment, index) => {
+        if (!(index >= MAX_COMMENTS_COUNT)) {
+          return (
+            <Review key={comment.id} review={comment}/>
+          );
+        }
+        return ``;
       })}
     </ul>
   );

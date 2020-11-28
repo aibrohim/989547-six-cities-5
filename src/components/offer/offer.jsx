@@ -3,20 +3,23 @@ import CommentForm from "../comment-form/comment-form";
 import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
-import NearOffersList from "../near-offers-list/near-offers-list";
 import {withDataLoading} from "../../hocks/with-data-loading";
 import {connect} from "react-redux";
 import classNames from "classnames";
 import {Link} from "react-router-dom";
 import UserNav from "../user-nav/user-nav";
-import {AuthorizationStatus} from "../../consts";
+import {AuthorizationStatus, MapTypes} from "../../consts";
 import BookmarkButton from "../bookmarkButton/bookmarkButton";
 import {getComments, getNearbyOffers, getOfferById} from "../../store/api-action";
+import {hoverOffer} from "../../store/action";
+import NearCard from "../offer-card-near/offer-card-near";
 
 const Offer = (props) => {
   const {offer, comments, nearbyHotels, authorizationStatus} = props;
   const {isPremium, description, bedrooms, adults, cost, isFavorite, rate, title, type, host, id} = offer;
   const {avatarUrl, name, isPro} = host;
+
+  const MAX_NEARBY_OFFERS_COUNT = 3;
 
   const images = offer.images.map((image, index) => ({
     url: image,
@@ -137,13 +140,20 @@ const Offer = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearbyHotels} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
+            <Map offers={nearbyHotels} activeOffer={offer} type={MapTypes.BIG} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOffersList offers={nearbyHotels} />
+            <div className="near-places__list places__list">
+              {nearbyHotels.map((nearByOffer, index) => {
+                if (!(index >= MAX_NEARBY_OFFERS_COUNT)) {
+                  return <NearCard key={nearByOffer.id} offer={nearByOffer} />;
+                }
+                return ``;
+              })}
+            </div>
           </section>
         </div>
       </main>
@@ -175,6 +185,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadNearbyOffers(id) {
     dispatch(getNearbyOffers(id));
+  },
+  discardHoveredOffer() {
+    dispatch(hoverOffer({}));
   }
 });
 

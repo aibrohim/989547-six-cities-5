@@ -8,10 +8,12 @@ import {
   updateOffers,
   loadBookmarks,
   updateBookmarks,
-  pushComment
+  pushComment,
+  changeCommentPostStatus,
+  errorHappened
 } from "./action.js";
 import {adaptOfferToClient, adaptReviewToClient} from "../utils.js";
-import {AuthorizationStatus} from "../consts";
+import {AuthorizationStatus, CommentPostStatus} from "../consts";
 import {HttpCode} from "../services/api";
 import browserHistory from "../browser-history";
 
@@ -43,6 +45,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, data)))
     .then(() => dispatch(redirectToRoute(`/`)))
     .catch((err) => {
+      dispatch(errorHappened());
       throw err;
     });
 };
@@ -109,5 +112,7 @@ export const postComment = (id, {comment, rating}) => (dispatch, _getState, api)
     .then(({data}) => {
       return data.map((review) => adaptReviewToClient(review));
     })
-    .then((data) => dispatch(pushComment(data)));
+    .then((data) => dispatch(pushComment(data)))
+    .then(() => dispatch(changeCommentPostStatus(CommentPostStatus.SUCCESSFULLY)))
+    .catch(() => dispatch(changeCommentPostStatus(CommentPostStatus.ERROR)));
 };

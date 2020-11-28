@@ -4,7 +4,7 @@ import {changeCity} from "../../store/action.js";
 import propTypes from "prop-types";
 import {hoverOffer} from "../../store/action.js";
 import {sortCities} from "../../store/action.js";
-import {sortTypes} from "../../consts.js";
+import {SortTypes} from "../../consts.js";
 
 class CitiesList extends React.PureComponent {
   constructor(props) {
@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(hoverOffer({}));
   },
   sortCitiesAction() {
-    dispatch(sortCities(sortTypes.POPULAR));
+    dispatch(sortCities(SortTypes.POPULAR));
   }
 });
 

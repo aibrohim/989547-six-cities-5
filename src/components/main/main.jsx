@@ -9,6 +9,7 @@ import classNames from "classnames";
 import UserNav from "../user-nav/user-nav";
 import {fetchOffersList} from "../../store/api-action.js";
 import {withDataLoading} from "../../hocks/with-data-loading";
+import {MapTypes} from "../../consts";
 
 const Main = (props) => {
   const {offers} = props;
@@ -31,7 +32,7 @@ const Main = (props) => {
     }
     return (
       <section className="cities__map map">
-        <Map offers={offers} styles={{width: `100%`}}/>
+        <Map offers={offers} type={MapTypes.SMALL} styles={{width: `100%`}}/>
       </section>
     );
   };

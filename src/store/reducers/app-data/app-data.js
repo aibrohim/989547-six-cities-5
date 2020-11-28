@@ -1,5 +1,5 @@
 import {ActionType} from "../../action.js";
-import {sortTypes} from "../../../consts.js";
+import {SortTypes} from "../../../consts.js";
 
 const getCities = (offers) => {
   const citiesNames = new Set();
@@ -45,13 +45,13 @@ const getFirstNotEmptyCity = (offersByCity) => {
 
 const sortCities = (offersList, type, allOffers, city) => {
   switch (type) {
-    case sortTypes.POPULAR:
+    case SortTypes.POPULAR:
       return getOffersByCity(allOffers).get(city);
-    case sortTypes.PRICE_LOW_TO_HIGH:
+    case SortTypes.PRICE_LOW_TO_HIGH:
       return offersList.slice().sort((a, b) => a.cost - b.cost);
-    case sortTypes.PRICE_HIGH_TO_LOW:
+    case SortTypes.PRICE_HIGH_TO_LOW:
       return offersList.slice().sort((a, b) => b.cost - a.cost);
-    case sortTypes.TOP:
+    case SortTypes.TOP:
       return offersList.slice().sort((a, b) => b.rate - a.rate);
     default:
       return offersList;
@@ -72,7 +72,7 @@ const initialState = {
   cities: [],
   activeCity: ``,
   offers: [],
-  activeSortType: sortTypes.POPULAR,
+  activeSortType: SortTypes.POPULAR,
   allOffers: [],
   isOffersLoaded: false,
   bookmarks: [],

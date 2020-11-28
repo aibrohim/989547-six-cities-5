@@ -70,3 +70,9 @@ export const adaptReviewToClient = (comment) => {
 
   return adaptedComment;
 };
+
+export const sortReviews = (reviews) => {
+  return reviews.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+};

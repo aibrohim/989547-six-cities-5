@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {sortCities} from "../../store/action.js";
-import {sortTypes} from "../../consts.js";
+import {SortTypes} from "../../consts.js";
 import propTypes from "prop-types";
 
 const Sort = (props) => {
@@ -24,10 +24,10 @@ const Sort = (props) => {
         </svg>
       </span>
       <ul onClick={handleClick} className="places__options places__options--custom places__options--opened">
-        <li className={`places__option ${activeClass(sortTypes.POPULAR)}`} data-sort-type={sortTypes.POPULAR} tabIndex="0">Popular</li>
-        <li className={`places__option ${activeClass(sortTypes.PRICE_LOW_TO_HIGH)}`} data-sort-type={sortTypes.PRICE_LOW_TO_HIGH} tabIndex="0">Price: low to high</li>
-        <li className={`places__option ${activeClass(sortTypes.PRICE_HIGH_TO_LOW)}`} data-sort-type={sortTypes.PRICE_HIGH_TO_LOW} tabIndex="0">Price: high to low</li>
-        <li className={`places__option ${activeClass(sortTypes.TOP)}`} data-sort-type={sortTypes.TOP} tabIndex="0">Top rated first</li>
+        <li className={`places__option ${activeClass(SortTypes.POPULAR)}`} data-sort-type={SortTypes.POPULAR} tabIndex="0">Popular</li>
+        <li className={`places__option ${activeClass(SortTypes.PRICE_LOW_TO_HIGH)}`} data-sort-type={SortTypes.PRICE_LOW_TO_HIGH} tabIndex="0">Price: low to high</li>
+        <li className={`places__option ${activeClass(SortTypes.PRICE_HIGH_TO_LOW)}`} data-sort-type={SortTypes.PRICE_HIGH_TO_LOW} tabIndex="0">Price: high to low</li>
+        <li className={`places__option ${activeClass(SortTypes.TOP)}`} data-sort-type={SortTypes.TOP} tabIndex="0">Top rated first</li>
       </ul>
     </form>
   );
