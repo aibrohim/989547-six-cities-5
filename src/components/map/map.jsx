@@ -2,7 +2,6 @@ import React from "react";
 import leaflet from "leaflet";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-
 import "../../../node_modules/leaflet/dist/leaflet.css";
 import {MapTypes} from "../../consts";
 
@@ -97,11 +96,14 @@ class Map extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    const {offers, hoveredOffer, activeOffer, type} = this.props;
+    const {hoveredOffer, activeOffer, type} = this.props;
+    const offers = this.props.offers.slice();
     if (type === MapTypes.BIG) {
       this.map.setView(toCordsArray(activeOffer.location), BIG_MAP_ZOOM);
+    } else {
+      this.map.flyTo(toCordsArray(offers[0].location), offers[0].location.zoom);
     }
-    if (Array.from(Object.entries(hoveredOffer)).length > 1) {
+    if (hoveredOffer.location) {
       const hoveredOfferIndex = offers.findIndex((offer) => offer.id === hoveredOffer.id);
 
       if ((hoveredOfferIndex < 0)) {
@@ -113,8 +115,6 @@ class Map extends React.PureComponent {
 
     if (type === MapTypes.BIG) {
       offers.push(activeOffer);
-    } else {
-      offers.push(hoveredOffer);
     }
     this.setMarkersWithActive(offers, activeOffer ? activeOffer : hoveredOffer);
   }
@@ -134,7 +134,9 @@ class Map extends React.PureComponent {
 Map.propTypes = {
   offers: propTypes.array.isRequired,
   styles: propTypes.object.isRequired,
-  hoveredOffer: propTypes.object
+  hoveredOffer: propTypes.object,
+  activeOffer: propTypes.object,
+  type: propTypes.string.isRequired
 };
 
 const mapStateToProps = ({PROCESS}) => ({
