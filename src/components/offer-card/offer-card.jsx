@@ -23,7 +23,12 @@ class OfferCard extends React.PureComponent {
     const {id, isPremium, previewImg, cost, isFavorite, rate, title, type} = offer;
 
 
-    const onMouseOver = () => onHoverOfferAction(offer);
+    const onMouseOver = () => {
+      if (block === `cities`) {
+        return onHoverOfferAction(offer);
+      }
+      return ``;
+    };
     return (
       <article className={`${className} place-card`} onMouseOver={onMouseOver}>
         {
