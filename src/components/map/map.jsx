@@ -4,6 +4,7 @@ import propTypes from "prop-types";
 import {connect} from "react-redux";
 
 import "../../../node_modules/leaflet/dist/leaflet.css";
+import {MapTypes} from "../../consts";
 
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
@@ -19,6 +20,8 @@ const toCordsArray = (location) => {
   return Array.from(Object.values(location));
 };
 
+const BIG_MAP_ZOOM = 13;
+
 class Map extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -29,6 +32,29 @@ class Map extends React.PureComponent {
         props.styles,
         {height: `100%`}
     );
+    this.setMarkersWithActive = this.setMarkersWithActive.bind(this);
+  }
+
+  setMarkersWithActive(offers, activeOffer) {
+    this.markers.forEach((marker) => marker.remove());
+    this.setMarkers(offers);
+
+    if (this.markers) {
+      this.markers.forEach((marker) => marker.remove());
+    }
+
+    this.markers = offers.reduce((items, {id, location}) => {
+      const coords = toCordsArray(location);
+      const pin = leaflet.marker(coords, {
+        icon: id === activeOffer.id ? activeIcon : icon
+      });
+
+      items.push(pin);
+
+      return items;
+    }, []);
+
+    this.markers.forEach((marker) => marker.addTo(this.map));
   }
 
   setMarkers(offers) {
@@ -41,8 +67,12 @@ class Map extends React.PureComponent {
   }
 
   componentDidMount() {
-    const city = toCordsArray(this.offers[0].location);
-    const zoom = this.offers[0].location.zoom;
+    let city = toCordsArray(this.offers[0].location);
+    let zoom = this.offers[0].location.zoom;
+    if (this.props.type === MapTypes.BIG) {
+      zoom = BIG_MAP_ZOOM;
+      city = toCordsArray(this.props.activeOffer.location);
+    }
     const map = leaflet.map(`map`, {
       center: city,
       zoom,
@@ -58,13 +88,20 @@ class Map extends React.PureComponent {
       })
       .addTo(map);
     this.setMarkers(this.offers);
+
+    if (this.props.type === MapTypes.BIG) {
+      const {offers, activeOffer} = this.props;
+      offers.push(activeOffer);
+      this.setMarkersWithActive(offers, activeOffer);
+    }
   }
 
   componentDidUpdate() {
-    const {offers, hoveredOffer} = this.props;
-    if (!hoveredOffer) {
-      this.map.flyTo(toCordsArray(offers[0].location), offers[0].location.zoom);
-    } else {
+    const {offers, hoveredOffer, activeOffer, type} = this.props;
+    if (type === MapTypes.BIG) {
+      this.map.setView(toCordsArray(activeOffer.location), BIG_MAP_ZOOM);
+    }
+    if (Array.from(Object.entries(hoveredOffer)).length > 1) {
       const hoveredOfferIndex = offers.findIndex((offer) => offer.id === hoveredOffer.id);
 
       if ((hoveredOfferIndex < 0)) {
@@ -74,25 +111,12 @@ class Map extends React.PureComponent {
       }
     }
 
-    this.markers.forEach((marker) => marker.remove());
-    this.setMarkers(offers);
-
-    if (this.markers) {
-      this.markers.forEach((marker) => marker.remove());
+    if (type === MapTypes.BIG) {
+      offers.push(activeOffer);
+    } else {
+      offers.push(hoveredOffer);
     }
-
-    this.markers = offers.reduce((items, {id, location}) => {
-      const coords = toCordsArray(location);
-      const pin = leaflet.marker(coords, {
-        icon: id === hoveredOffer.id ? activeIcon : icon
-      });
-
-      items.push(pin);
-
-      return items;
-    }, []);
-
-    this.markers.forEach((marker) => marker.addTo(this.map));
+    this.setMarkersWithActive(offers, activeOffer ? activeOffer : hoveredOffer);
   }
 
   componentWillUnmount() {
