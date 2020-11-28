@@ -1,7 +1,6 @@
 import React from "react";
 import Loader from "../components/loading/loading";
 import propTypes from "prop-types";
-import browserHistory from "../browser-history";
 
 export const withDataLoading = (Component) => {
   class WithDataLoading extends React.PureComponent {
@@ -38,14 +37,12 @@ export const withDataLoading = (Component) => {
     componentDidUpdate(prevProps) {
       if (prevProps.pathId !== this.props.pathId) {
         const {loadOffer, loadComments, loadNearbyOffers, pathId} = this.props;
+        document.documentElement.scrollTop = 0;
         loadOffer(+pathId);
         loadComments(+pathId);
         loadNearbyOffers(+pathId);
       }
       const {isDataLoaded} = this.props;
-      if (!(browserHistory.location.pathname === `/favorites`)) {
-        document.documentElement.scrollTop = 0;
-      }
       if (isDataLoaded) {
         this.setState({
           isDataLoading: false

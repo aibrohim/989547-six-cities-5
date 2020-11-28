@@ -1,4 +1,4 @@
-import React from "react";
+import React, {createRef} from "react";
 import {postComment} from "../../store/api-action";
 import {connect} from "react-redux";
 import propTypes from "prop-types";
@@ -11,9 +11,15 @@ class CommentForm extends React.PureComponent {
       rating: null,
       review: ``
     };
+    this.buttonRef = createRef();
+    this.formRef = createRef();
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.buttonRef.current.disabled = true;
   }
 
   handleFormSubmit(evt) {
@@ -28,6 +34,12 @@ class CommentForm extends React.PureComponent {
 
     delete adaptedComment.review;
     this.props.postCommentAction(this.props.id, adaptedComment);
+    this.buttonRef.current.disabled = true;
+    this.formRef.current.reset();
+    this.setState({
+      rating: null,
+      review: ``
+    });
   }
 
   handleFieldChange(evt) {
@@ -37,9 +49,17 @@ class CommentForm extends React.PureComponent {
     });
   }
 
+  componentDidUpdate() {
+    if (this.state.rating === null || this.state.review.length < 50 || this.state.review.length > 300) {
+      this.buttonRef.current.disabled = true;
+    } else {
+      this.buttonRef.current.disabled = false;
+    }
+  }
+
   render() {
     return (
-      <form className="reviews__form form" action="#" method="post" onSubmit={this.handleFormSubmit}>
+      <form className="reviews__form form" action="#" method="post" onSubmit={this.handleFormSubmit} ref={this.formRef}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={this.handleFieldChange}/>
@@ -77,12 +97,12 @@ class CommentForm extends React.PureComponent {
             </svg>
           </label>
         </div>
-        <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={this.handleFieldChange}></textarea>
+        <textarea className="reviews__textarea form__textarea" id="review" name="review" minLength="50" maxLength="300" placeholder="Tell how was your stay, what you like and what can be improved" onChange={this.handleFieldChange} />
         <div className="reviews__button-wrapper">
           <p className="reviews__help">
             To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
           </p>
-          <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+          <button className="reviews__submit form__submit button" type="submit" ref={this.buttonRef}>Submit</button>
         </div>
       </form>
 

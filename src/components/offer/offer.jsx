@@ -172,7 +172,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadNearbyOffers(id) {
     dispatch(getNearbyOffers(id));
-  },
+  }
 });
 
 export {Offer};
