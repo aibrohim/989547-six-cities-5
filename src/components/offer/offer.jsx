@@ -55,10 +55,13 @@ const Offer = (props) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image) => {
-                return (<div key={image.id} className="property__image-wrapper">
-                  <img className="property__image" src={image.url} alt="Photo studio" />
-                </div>);
+              {images.map((image, index) => {
+                if (!(index > 5)) {
+                  return (<div key={image.id} className="property__image-wrapper">
+                    <img className="property__image" src={image.url} alt="Photo studio" />
+                  </div>);
+                }
+                return ``;
               })}
             </div>
           </div>
