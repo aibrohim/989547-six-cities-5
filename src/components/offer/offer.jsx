@@ -20,6 +20,7 @@ const Offer = (props) => {
   const {avatarUrl, name, isPro} = host;
 
   const MAX_NEARBY_OFFERS_COUNT = 3;
+  const MAX_SHOWABLE_IMAGES_COUNT = 6;
 
   const images = offer.images.map((image, index) => ({
     url: image,
@@ -59,7 +60,7 @@ const Offer = (props) => {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.map((image, index) => {
-                if (!(index > 5)) {
+                if (!(index >= MAX_SHOWABLE_IMAGES_COUNT)) {
                   return (<div key={image.id} className="property__image-wrapper">
                     <img className="property__image" src={image.url} alt="Photo studio" />
                   </div>);
