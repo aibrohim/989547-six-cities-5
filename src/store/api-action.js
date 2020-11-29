@@ -35,9 +35,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(`/login`)
     .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, data)))
-    .catch((err) => {
-      throw err;
-    });
+    .catch(() => {});
 };
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => {

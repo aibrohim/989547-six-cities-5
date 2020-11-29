@@ -20,6 +20,13 @@ export const SortTypes = {
   TOP: `TOP`
 };
 
+export const ReadableSortTypes = {
+  POPULAR: `Popular`,
+  PRICE_LOW_TO_HIGH: `Price: low to high`,
+  PRICE_HIGH_TO_LOW: `Price: high to low`,
+  TOP: `Top rated first`
+};
+
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`
