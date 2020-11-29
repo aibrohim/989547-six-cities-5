@@ -5,9 +5,10 @@
   "description": "Личный проект «Шесть городов» от HTML Academy",
   "scripts": {
     "eslint": "eslint --ext .jsx --ext .js src/",
-    "test": "npm run eslint",
+    "test": "npm run eslint && npm run test.jest",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "test.jest": "jest"
   },
   "devDependencies": {
     "@babel/core": "7.8.7",
@@ -20,10 +21,12 @@
     "eslint-plugin-react": "^7.21.3",
     "file-loader": "6.1.1",
     "img-loader": "3.0.2",
+    "jest": "25.1.0",
+    "react-test-renderer": "16.12.0",
     "style-loader": "2.0.0",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "4.41.6",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.10.3"
   },
   "engines": {
     "node": "10"
