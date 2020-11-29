@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "../components/loading/loading";
+import Loader from "../../components/loading/loading";
 import propTypes from "prop-types";
 
 export const withDataLoading = (Component) => {

@@ -3,7 +3,7 @@ import CommentForm from "../comment-form/comment-form";
 import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map";
-import {withDataLoading} from "../../hocks/with-data-loading";
+import {withDataLoading} from "../../hocks/with-data-loading/with-data-loading";
 import {connect} from "react-redux";
 import classNames from "classnames";
 import {Link} from "react-router-dom";

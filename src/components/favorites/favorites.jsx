@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {withDataLoading} from "../../hocks/with-data-loading";
+import {withDataLoading} from "../../hocks/with-data-loading/with-data-loading";
 import BookmarkCard from "../offer-card-bookmark/offer-card-bookmark";
 import {getOffersByCity} from "../../store/reducers/app-data/app-data";
 import propTypes from "prop-types";
