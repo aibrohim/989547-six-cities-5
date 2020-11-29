@@ -1,4 +1,6 @@
 import {ActionType} from "../../action.js";
+import {sortReviews} from "../../../utils";
+import {CommentPostStatus} from "../../../consts";
 
 const initialState = {
   hoveredOffer: {},
@@ -8,6 +10,7 @@ const initialState = {
   isOfferLoaded: false,
   isCommentsLoaded: false,
   isNearbyOffersLoaded: false,
+  commentPostStatus: CommentPostStatus.PENDING
 };
 
 const appProcess = (state = initialState, action) => {
@@ -25,7 +28,7 @@ const appProcess = (state = initialState, action) => {
           {},
           state,
           {
-            comments: action.payload,
+            comments: sortReviews(action.payload),
             isCommentsLoaded: true
           }
       );
@@ -47,22 +50,20 @@ const appProcess = (state = initialState, action) => {
             isNearbyOffersLoaded: true,
           }
       );
-    case ActionType.START_LOADING:
-      return Object.assign(
-          {},
-          state,
-          {
-            isOfferLoaded: false,
-            isCommentsLoaded: false,
-            isNearbyOffersLoaded: false,
-          }
-      );
     case ActionType.POST_COMMENT:
       return Object.assign(
           {},
           state,
           {
-            comments: action.payload
+            comments: sortReviews(action.payload)
+          }
+      );
+    case ActionType.CHANGE_COMMENT_POST_STATUS:
+      return Object.assign(
+          {},
+          state,
+          {
+            commentPostStatus: action.payload
           }
       );
   }

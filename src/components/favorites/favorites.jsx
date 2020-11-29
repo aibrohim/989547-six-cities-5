@@ -6,6 +6,7 @@ import BookmarkCard from "../offer-card-bookmark/offer-card-bookmark";
 import {getOffersByCity} from "../../store/reducers/app-data/app-data";
 import propTypes from "prop-types";
 import classNames from "classnames";
+import {fetchBookmarks} from "../../store/api-action";
 
 const Favorites = (props) => {
   const bookmarks = getOffersByCity(props.bookmarks);
@@ -116,10 +117,16 @@ const mapStateToProps = ({USER, DATA}) => ({
   userInfo: USER.userInfo,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  loadBookmarks() {
+    dispatch(fetchBookmarks());
+  }
+});
+
 Favorites.propTypes = {
   bookmarks: propTypes.array.isRequired,
   userInfo: propTypes.object.isRequired
 };
 
 export {Favorites};
-export default connect(mapStateToProps)(withDataLoading(Favorites));
+export default connect(mapStateToProps, mapDispatchToProps)(withDataLoading(Favorites));

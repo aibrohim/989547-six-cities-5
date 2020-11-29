@@ -1,7 +1,6 @@
 import React from "react";
 import Loader from "../components/loading/loading";
 import propTypes from "prop-types";
-import browserHistory from "../browser-history";
 
 export const withDataLoading = (Component) => {
   class WithDataLoading extends React.PureComponent {
@@ -14,6 +13,19 @@ export const withDataLoading = (Component) => {
     }
 
     componentDidMount() {
+      if (this.props.loadOffer && this.props.loadComments && this.props.loadNearbyOffers) {
+        const {loadOffer, loadComments, loadNearbyOffers, pathId, discardHoveredOffer} = this.props;
+        discardHoveredOffer();
+        loadOffer(+pathId);
+        loadComments(+pathId);
+        loadNearbyOffers(+pathId);
+      } else if (this.props.loadBookmarks) {
+        const {loadBookmarks} = this.props;
+        loadBookmarks();
+      } else if (this.props.loadOffers && !(this.props.isDataLoaded)) {
+        const {loadOffers} = this.props;
+        loadOffers();
+      }
       const {isDataLoaded} = this.props;
 
       if (isDataLoaded) {
@@ -23,11 +35,16 @@ export const withDataLoading = (Component) => {
       }
     }
 
-    componentDidUpdate() {
-      const {isDataLoaded} = this.props;
-      if (!(browserHistory.location.pathname === `/favorites`)) {
+    componentDidUpdate(prevProps) {
+      if (prevProps.pathId !== this.props.pathId) {
+        const {loadOffer, loadComments, loadNearbyOffers, pathId, discardHoveredOffer} = this.props;
         document.documentElement.scrollTop = 0;
+        loadOffer(+pathId);
+        loadComments(+pathId);
+        loadNearbyOffers(+pathId);
+        discardHoveredOffer();
       }
+      const {isDataLoaded} = this.props;
       if (isDataLoaded) {
         this.setState({
           isDataLoading: false
@@ -44,7 +61,14 @@ export const withDataLoading = (Component) => {
   }
 
   WithDataLoading.propTypes = {
-    isDataLoaded: propTypes.bool
+    isDataLoaded: propTypes.bool,
+    loadOffer: propTypes.func,
+    loadComments: propTypes.func,
+    loadNearbyOffers: propTypes.func,
+    loadBookmarks: propTypes.func,
+    loadOffers: propTypes.func,
+    pathId: propTypes.string,
+    discardHoveredOffer: propTypes.func
   };
 
   return WithDataLoading;

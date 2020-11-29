@@ -4,7 +4,7 @@ import propTypes from "prop-types";
 import {connect} from "react-redux";
 import {hoverOffer} from "../../store/action.js";
 import {updateOfferBookmarkStatus} from "../../store/api-action";
-import BookmarkButton from "../../bookmarkButton/bookmarkButton";
+import BookmarkButton from "../bookmarkButton/bookmarkButton";
 
 class OfferCard extends React.PureComponent {
   constructor(props) {
@@ -23,9 +23,14 @@ class OfferCard extends React.PureComponent {
     const {id, isPremium, previewImg, cost, isFavorite, rate, title, type} = offer;
 
 
-    const onMouseOver = () => onHoverOfferAction(offer);
+    const handleOfferHover = () => {
+      if (block === `cities`) {
+        return onHoverOfferAction(offer);
+      }
+      return ``;
+    };
     return (
-      <article className={`${className} place-card`} onMouseOver={onMouseOver}>
+      <article className={`${className} place-card`} onMouseOver={handleOfferHover}>
         {
           isPremium
             ? <div className="place-card__mark">

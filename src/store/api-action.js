@@ -8,10 +8,14 @@ import {
   updateOffers,
   loadBookmarks,
   updateBookmarks,
-  pushComment
+  pushComment,
+  changeCommentPostStatus,
+  errorHappened
 } from "./action.js";
 import {adaptOfferToClient, adaptReviewToClient} from "../utils.js";
-import {AuthorizationStatus} from "../consts";
+import {AuthorizationStatus, CommentPostStatus} from "../consts";
+import {HttpCode} from "../services/api";
+import browserHistory from "../browser-history";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -31,9 +35,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(`/login`)
     .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, data)))
-    .catch((err) => {
-      throw err;
-    });
+    .catch(() => {});
 };
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => {
@@ -41,6 +43,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, data)))
     .then(() => dispatch(redirectToRoute(`/`)))
     .catch((err) => {
+      dispatch(errorHappened());
       throw err;
     });
 };
@@ -82,6 +85,9 @@ export const updateOfferBookmarkStatus = (id, status) => (dispatch, _getState, a
     .then(({payload}) => dispatch(loadOffer(payload)))
     .then(({payload}) => dispatch(updateBookmarks(payload)))
     .catch((err) => {
+      if (err.response.status === HttpCode.UNAUTHORIZED) {
+        browserHistory.push(`/login`);
+      }
       throw err;
     });
 };
@@ -104,5 +110,7 @@ export const postComment = (id, {comment, rating}) => (dispatch, _getState, api)
     .then(({data}) => {
       return data.map((review) => adaptReviewToClient(review));
     })
-    .then((data) => dispatch(pushComment(data)));
+    .then((data) => dispatch(pushComment(data)))
+    .then(() => dispatch(changeCommentPostStatus(CommentPostStatus.SUCCESSFULLY)))
+    .catch(() => dispatch(changeCommentPostStatus(CommentPostStatus.ERROR)));
 };

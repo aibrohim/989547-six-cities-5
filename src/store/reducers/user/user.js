@@ -4,7 +4,8 @@ import {ActionType} from "../../action";
 const initialStatus = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   userInfo: {},
-  isUserStatusLoaded: false
+  isUserStatusLoaded: false,
+  errorOnSigning: false,
 };
 
 const user = (state = initialStatus, action) => {
@@ -17,6 +18,14 @@ const user = (state = initialStatus, action) => {
             authorizationStatus: action.payload,
             userInfo: action.userInfo,
             isUserStatusLoaded: true
+          }
+      );
+    case ActionType.ERROR_HAPPENED:
+      return Object.assign(
+          {},
+          state,
+          {
+            errorOnSigning: true
           }
       );
   }
