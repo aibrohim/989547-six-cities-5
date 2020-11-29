@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {login} from "../../store/api-action";
 import {Link} from "react-router-dom";
 import propTypes from "prop-types";
-import {withLogin} from "../../hocks/with-login";
+import {withLogin} from "../../hocks/with-login/with-login";
 
 const Login = (props) => {
   const {loginRef, passwordRef, buttonRef, onSubmit, isLogging, errorOnSigning} = props;

@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import propTypes from "prop-types";
 import {CommentPostStatus} from "../../consts";
 import {changeCommentPostStatus} from "../../store/action.js";
-import {withComment} from "../../hocks/with-comment";
+import {withComment} from "../../hocks/with-comment/with-comment";
 
 const CommentForm = (props) => {
   const {sendStatus, onFieldsChange, formRef, onFormSubmit, buttonRef} = props;

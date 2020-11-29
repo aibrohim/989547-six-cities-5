@@ -8,7 +8,7 @@ import CitiesEmpty from "../cities-empty/cities-empty";
 import classNames from "classnames";
 import UserNav from "../user-nav/user-nav";
 import {fetchOffersList} from "../../store/api-action.js";
-import {withDataLoading} from "../../hocks/with-data-loading";
+import {withDataLoading} from "../../hocks/with-data-loading/with-data-loading";
 import {MapTypes} from "../../consts";
 
 const Main = (props) => {

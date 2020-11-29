@@ -1,5 +1,5 @@
 import React, {createRef} from "react";
-import {CommentPostStatus} from "../consts";
+import {CommentPostStatus} from "../../consts";
 import propTypes from "prop-types";
 
 export const withComment = (Component) => {
