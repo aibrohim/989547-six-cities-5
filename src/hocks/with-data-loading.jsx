@@ -22,7 +22,7 @@ export const withDataLoading = (Component) => {
       } else if (this.props.loadBookmarks) {
         const {loadBookmarks} = this.props;
         loadBookmarks();
-      } else if (this.props.loadOffers) {
+      } else if (this.props.loadOffers && !(this.props.isDataLoaded)) {
         const {loadOffers} = this.props;
         loadOffers();
       }
