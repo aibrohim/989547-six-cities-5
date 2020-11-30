@@ -80,7 +80,7 @@ export const getNearbyOffers = (id) => (dispatch, _getState, api) => {
 };
 
 export const updateOfferBookmarkStatus = (id, status) => (dispatch, _getState, api) => {
-  api.post(`/favorite/${id}/${status}`)
+  api.post(`/favorit/${id}/${status}`)
     .then(({data}) => dispatch(updateOffers(adaptOfferToClient(data))))
     .then(({payload}) => dispatch(loadOffer(payload)))
     .then(({payload}) => dispatch(updateBookmarks(payload)))

@@ -9,7 +9,7 @@ import classNames from "classnames";
 import {Link} from "react-router-dom";
 import UserNav from "../user-nav/user-nav";
 import {AuthorizationStatus, MapTypes} from "../../consts";
-import BookmarkButton from "../bookmarkButton/bookmarkButton";
+import BookmarkButton from "../bookmark-button/bookmark-button";
 import {getComments, getNearbyOffers, getOfferById} from "../../store/api-action";
 import {hoverOffer} from "../../store/action";
 import NearCard from "../offer-card-near/offer-card-near";
