@@ -20,6 +20,7 @@ export const createAPI = (onUnauthorized) => {
     const {response} = err;
     if (response.status === HttpCode.UNAUTHORIZED) {
       onUnauthorized();
+      throw err;
     }
   };
 
