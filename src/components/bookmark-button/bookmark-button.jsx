@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {updateOfferBookmarkStatus} from "../../store/api-action";
+import {updateOfferBookmarkStatus} from "../../store/api-action.js";
 import classNames from "classnames";
 import propTypes from "prop-types";
 
