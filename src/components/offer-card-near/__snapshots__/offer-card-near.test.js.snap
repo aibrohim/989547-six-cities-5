@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should near card render 1`] = `
+<OfferCard
+  block="near-places"
+  className="near-places__card"
+  imgHeight="200"
+  imgWidth="260"
+/>
+`;

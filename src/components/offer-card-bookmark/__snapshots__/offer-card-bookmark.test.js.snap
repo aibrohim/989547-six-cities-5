@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should bookmark offer card render 1`] = `
+<OfferCard
+  block="favorites"
+  className="favorites__card"
+  imgHeight="110"
+  imgWidth="150"
+/>
+`;

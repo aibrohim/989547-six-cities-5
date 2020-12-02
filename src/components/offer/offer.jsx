@@ -2,17 +2,18 @@ import React from "react";
 import CommentForm from "../comment-form/comment-form";
 import propTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
-import Map from "../map/map";
+import CityMap from "../city-map/city-map";
 import {withDataLoading} from "../../hocks/with-data-loading/with-data-loading";
 import {connect} from "react-redux";
 import classNames from "classnames";
 import {Link} from "react-router-dom";
 import UserNav from "../user-nav/user-nav";
 import {AuthorizationStatus, MapTypes} from "../../consts";
-import BookmarkButton from "../bookmarkButton/bookmarkButton";
+import BookmarkButton from "../bookmark-button/bookmark-button";
 import {getComments, getNearbyOffers, getOfferById} from "../../store/api-action";
 import {hoverOffer} from "../../store/action";
 import NearCard from "../offer-card-near/offer-card-near";
+import {BookmarkButtonTypesWithProperties} from "../../consts.js";
 
 const Offer = (props) => {
   const {offer, comments, nearbyHotels, authorizationStatus} = props;
@@ -80,7 +81,7 @@ const Offer = (props) => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <BookmarkButton name="property" id={id} isFavorite={isFavorite} width={31} height={33}/>
+                <BookmarkButton type={BookmarkButtonTypesWithProperties.PROPERTY} id={id} isFavorite={isFavorite}/>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -141,7 +142,7 @@ const Offer = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearbyHotels} activeOffer={offer} type={MapTypes.BIG} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
+            <CityMap offers={nearbyHotels} activeOffer={offer} type={MapTypes.BIG} styles={{width: `1144px`, marginLeft: `auto`, marginRight: `auto`}}/>
           </section>
         </section>
         <div className="container">

@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should Bookmark button render correctly Button with active status 1`] = `
+<button
+  className="property__bookmark-button button property__bookmark-button--active"
+  onClick={[Function]}
+  type="button"
+>
+  <svg
+    className="property__bookmark-icon"
+    height={33}
+    width={31}
+  >
+    <use
+      xlinkHref="#icon-bookmark"
+    />
+  </svg>
+  <span
+    className="visually-hidden"
+  >
+    To bookmarks
+  </span>
+</button>
+`;
+
+exports[`Should Bookmark button render correctly Button with non active status 1`] = `
+<button
+  className="property__bookmark-button button"
+  onClick={[Function]}
+  type="button"
+>
+  <svg
+    className="property__bookmark-icon"
+    height={33}
+    width={31}
+  >
+    <use
+      xlinkHref="#icon-bookmark"
+    />
+  </svg>
+  <span
+    className="visually-hidden"
+  >
+    To bookmarks
+  </span>
+</button>
+`;

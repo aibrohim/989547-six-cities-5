@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should error render 1`] = `
+<p
+  className="status status--error"
+>
+  Error
+</p>
+`;

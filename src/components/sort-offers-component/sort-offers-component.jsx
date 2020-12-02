@@ -5,7 +5,7 @@ import {SortTypes, ReadableSortTypes} from "../../consts.js";
 import {withActiveSortType} from "../../hocks/with-active-sort-type/with-active-sort-type";
 import propTypes from "prop-types";
 
-const Sort = (props) => {
+const SortOffersComponent = (props) => {
   const {activeSortType, sortCitiesAction, isOpened, onOpenerClick} = props;
   const handleClick = (evt) => {
     sortCitiesAction(evt.target.dataset.sortType);
@@ -53,12 +53,12 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-Sort.propTypes = {
+SortOffersComponent.propTypes = {
   activeSortType: propTypes.string,
   sortCitiesAction: propTypes.func,
   isOpened: propTypes.bool.isRequired,
   onOpenerClick: propTypes.func.isRequired
 };
 
-export {Sort};
-export default connect(mapStateToProps, mapDispatchToProps)(withActiveSortType(Sort));
+export {SortOffersComponent};
+export default connect(mapStateToProps, mapDispatchToProps)(withActiveSortType(SortOffersComponent));
