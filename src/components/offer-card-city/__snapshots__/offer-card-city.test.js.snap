@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should main card render 1`] = `
+<OfferCard
+  block="cities"
+  className="cities__place-card"
+  imgHeight="200"
+  imgWidth="260"
+/>
+`;

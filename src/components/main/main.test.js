@@ -1,21 +1,17 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import {MemoryRouter} from "react-router-dom";
+import configureMockStore from "redux-mock-store";
 
-import {CityOffersList} from "./city-offers-list";
+import {Main} from "./main";
 
-const mockStore = configureStore()({
-  DATA: {
-    activeCity: `Amsterdam`
-  }
-});
-
-const activeCity = `Amsterdam`;
 const offers = [
   {
     id: 123,
+    city: {
+      name: `Amsterdam`
+    },
     cost: 444,
     isFavorite: true,
     isPremium: false,
@@ -26,6 +22,9 @@ const offers = [
   },
   {
     id: 124,
+    city: {
+      name: `Amsterdam`
+    },
     cost: 445,
     isFavorite: true,
     isPremium: false,
@@ -36,13 +35,32 @@ const offers = [
   },
 ];
 
-it(`Should City offers list render correctly`, () => {
+const mockStore = configureMockStore()({
+  DATA: {
+    offers,
+    isDataLoaded: false,
+    cities: [],
+    activeCity: `Cologne`
+  },
+  USER: {
+    authorizationStatus: `AUTH`,
+    userInfo: {
+      email: `ibrohim@gmail.com`
+    }
+  },
+});
+
+jest.mock(`../city-map/city-map`, () => `CityMap`);
+
+const isDataLoaded = true;
+
+it(`Should main page render`, () => {
   const tree = renderer
   .create(
       <Provider store={mockStore}>
         <MemoryRouter>
-          <CityOffersList
-            activeCity={activeCity}
+          <Main
+            isDataLoaded={isDataLoaded}
             offers={offers}
           />
         </MemoryRouter>

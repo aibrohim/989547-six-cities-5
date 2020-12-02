@@ -10,7 +10,6 @@ import {BookmarkButtonTypesWithProperties} from "../../consts.js";
 class OfferCard extends React.PureComponent {
   constructor(props) {
     super(props);
-
     this.handleBookmarkClick = this.handleBookmarkClick.bind(this);
   }
 

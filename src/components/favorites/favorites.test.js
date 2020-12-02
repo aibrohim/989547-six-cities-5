@@ -1,21 +1,17 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import {MemoryRouter} from "react-router-dom";
+import configureStore from "redux-mock-store";
 
-import {CityOffersList} from "./city-offers-list";
+import {Favorites} from "./favorites";
 
-const mockStore = configureStore()({
-  DATA: {
-    activeCity: `Amsterdam`
-  }
-});
-
-const activeCity = `Amsterdam`;
 const offers = [
   {
     id: 123,
+    city: {
+      name: `Amsterdam`
+    },
     cost: 444,
     isFavorite: true,
     isPremium: false,
@@ -26,6 +22,9 @@ const offers = [
   },
   {
     id: 124,
+    city: {
+      name: `Amsterdam`
+    },
     cost: 445,
     isFavorite: true,
     isPremium: false,
@@ -36,14 +35,30 @@ const offers = [
   },
 ];
 
-it(`Should City offers list render correctly`, () => {
+const mockStore = configureStore()({
+  USER: {
+    isDataLoaded: false,
+    userInfo: {
+      email: `ibrohim@gmail.com`
+    }
+  },
+  DATA: {
+    bookmarks: offers
+  }
+});
+
+const userInfo = {
+  email: `ibrohim@gmail.com`
+};
+
+it(`Should favorites page render`, () => {
   const tree = renderer
   .create(
       <Provider store={mockStore}>
         <MemoryRouter>
-          <CityOffersList
-            activeCity={activeCity}
-            offers={offers}
+          <Favorites
+            bookmarks={offers}
+            userInfo={userInfo}
           />
         </MemoryRouter>
       </Provider>

@@ -1,0 +1,249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should City offers list render correctly 1`] = `
+<section
+  className="cities__places places"
+>
+  <h2
+    className="visually-hidden"
+  >
+    Places
+  </h2>
+  <b
+    className="places__found"
+  >
+    2
+     places to stay in 
+    Amsterdam
+  </b>
+  <form
+    action="#"
+    className="places__sorting"
+    method="get"
+  >
+    <span
+      className="places__sorting-caption"
+    >
+      Sort by 
+    </span>
+    <span
+      className="places__sorting-type"
+      onClick={[Function]}
+      tabIndex="0"
+    >
+      <svg
+        className="places__sorting-arrow"
+        height="4"
+        width="7"
+      >
+        <use
+          xlinkHref="#icon-arrow-select"
+        />
+      </svg>
+    </span>
+    
+  </form>
+  <div
+    className="cities__places-list places__list tabs__content"
+  >
+    <article
+      className="cities__place-card place-card"
+      onMouseOver={[Function]}
+    >
+      
+      <div
+        className="cities__image-wrapper place-card__image-wrapper"
+      >
+        <a
+          href="/offer/123"
+          onClick={[Function]}
+        >
+          <img
+            className="place-card__image"
+            height="200"
+            src="https://picsum.photos/210"
+            width="260"
+          />
+        </a>
+      </div>
+      <div
+        className="place-card__info"
+      >
+        <div
+          className="place-card__price-wrapper"
+        >
+          <div
+            className="place-card__price"
+          >
+            <b
+              className="place-card__price-value"
+            >
+              €
+              444
+            </b>
+            <span
+              className="place-card__price-text"
+            >
+              / night
+            </span>
+          </div>
+          <button
+            className="place-card__bookmark-button button place-card__bookmark-button--active"
+            onClick={[Function]}
+            type="button"
+          >
+            <svg
+              className="place-card__bookmark-icon"
+              height={19}
+              width={18}
+            >
+              <use
+                xlinkHref="#icon-bookmark"
+              />
+            </svg>
+            <span
+              className="visually-hidden"
+            >
+              To bookmarks
+            </span>
+          </button>
+        </div>
+        <div
+          className="place-card__rating rating"
+        >
+          <div
+            className="place-card__stars rating__stars"
+          >
+            <span
+              style={
+                Object {
+                  "width": "80%",
+                }
+              }
+            />
+            <span
+              className="visually-hidden"
+            >
+              Rating
+            </span>
+          </div>
+        </div>
+        <h2
+          className="place-card__name"
+        >
+          <a
+            href="/offer/123"
+            onClick={[Function]}
+          >
+            Bla bla bla
+          </a>
+        </h2>
+        <p
+          className="place-card__type"
+        >
+          Room
+        </p>
+      </div>
+    </article>
+    <article
+      className="cities__place-card place-card"
+      onMouseOver={[Function]}
+    >
+      
+      <div
+        className="cities__image-wrapper place-card__image-wrapper"
+      >
+        <a
+          href="/offer/124"
+          onClick={[Function]}
+        >
+          <img
+            className="place-card__image"
+            height="200"
+            src="https://picsum.photos/210"
+            width="260"
+          />
+        </a>
+      </div>
+      <div
+        className="place-card__info"
+      >
+        <div
+          className="place-card__price-wrapper"
+        >
+          <div
+            className="place-card__price"
+          >
+            <b
+              className="place-card__price-value"
+            >
+              €
+              445
+            </b>
+            <span
+              className="place-card__price-text"
+            >
+              / night
+            </span>
+          </div>
+          <button
+            className="place-card__bookmark-button button place-card__bookmark-button--active"
+            onClick={[Function]}
+            type="button"
+          >
+            <svg
+              className="place-card__bookmark-icon"
+              height={19}
+              width={18}
+            >
+              <use
+                xlinkHref="#icon-bookmark"
+              />
+            </svg>
+            <span
+              className="visually-hidden"
+            >
+              To bookmarks
+            </span>
+          </button>
+        </div>
+        <div
+          className="place-card__rating rating"
+        >
+          <div
+            className="place-card__stars rating__stars"
+          >
+            <span
+              style={
+                Object {
+                  "width": "80%",
+                }
+              }
+            />
+            <span
+              className="visually-hidden"
+            >
+              Rating
+            </span>
+          </div>
+        </div>
+        <h2
+          className="place-card__name"
+        >
+          <a
+            href="/offer/124"
+            onClick={[Function]}
+          >
+            Hello, mello, shmello
+          </a>
+        </h2>
+        <p
+          className="place-card__type"
+        >
+          House
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+`;
