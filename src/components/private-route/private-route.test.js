@@ -17,7 +17,7 @@ const noop = () => {};
 
 const authorizationStatus = `NO_AUTH`;
 const exact = true;
-const path = true;
+const path = ``;
 const type = ``;
 const isUserStatusLoaded = false;
 
@@ -30,7 +30,7 @@ it(`Should private route work`, () => {
             authorizationStatus={authorizationStatus}
             exact={exact}
             path={path}
-            type={path}
+            type={type}
             isUserStatusLoaded={isUserStatusLoaded}
             render={noop}
           />
