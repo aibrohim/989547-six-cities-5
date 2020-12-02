@@ -1,5 +1,5 @@
 import React from "react";
-import Sort from "../sort/sort";
+import SortOffersComponent from "../sort-offers-component/sort-offers-component";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
 import MainCard from "../offer-card-city/offer-card-city";
@@ -11,7 +11,7 @@ const CityOffersList = (props) => {
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">{offers.length} places to stay in {activeCity}</b>
-      <Sort />
+      <SortOffersComponent />
       <div className="cities__places-list places__list tabs__content">
         {offers.map((offer) => <MainCard key={offer.id} offer={offer}/>)}
       </div>

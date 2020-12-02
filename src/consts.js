@@ -43,3 +43,16 @@ export const CommentPostStatus = {
   SUCCESSFULLY: `SUCCESSFULLY`,
   ERROR: `ERROR`
 };
+
+export const BookmarkButtonTypesWithProperties = {
+  PROPERTY: {
+    name: `property`,
+    width: 31,
+    height: 33
+  },
+  PLACE_CARD: {
+    name: `place-card`,
+    width: 18,
+    height: 19
+  }
+};

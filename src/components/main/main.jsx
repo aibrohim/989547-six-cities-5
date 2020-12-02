@@ -1,7 +1,7 @@
 import React from "react";
 import propTypes from "prop-types";
 import CityOffersList from "./../citiy-offers-list/city-offers-list";
-import Map from "../map/map";
+import CityMap from "../city-map/city-map";
 import CitiesList from "../cities-list/cities-list";
 import {connect} from "react-redux";
 import CitiesEmpty from "../cities-empty/cities-empty";
@@ -32,7 +32,7 @@ const Main = (props) => {
     }
     return (
       <section className="cities__map map">
-        <Map offers={offers} type={MapTypes.SMALL} styles={{width: `100%`}}/>
+        <CityMap offers={offers} type={MapTypes.SMALL} styles={{width: `100%`}}/>
       </section>
     );
   };

@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {hoverOffer} from "../../store/action.js";
 import {updateOfferBookmarkStatus} from "../../store/api-action";
 import BookmarkButton from "../bookmark-button/bookmark-button";
+import {BookmarkButtonTypesWithProperties} from "../../consts.js";
 
 class OfferCard extends React.PureComponent {
   constructor(props) {
@@ -52,7 +53,7 @@ class OfferCard extends React.PureComponent {
               <b className="place-card__price-value">&euro;{cost}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <BookmarkButton name="place-card" id={id} isFavorite={isFavorite} width={18} height={19}/>
+            <BookmarkButton type={BookmarkButtonTypesWithProperties.PLACE_CARD} name="place-card" id={id} isFavorite={isFavorite} width={18} height={19}/>
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">

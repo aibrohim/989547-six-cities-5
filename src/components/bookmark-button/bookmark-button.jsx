@@ -4,7 +4,8 @@ import {updateOfferBookmarkStatus} from "../../store/api-action.js";
 import classNames from "classnames";
 import propTypes from "prop-types";
 
-const BookmarkButton = ({name, id, isFavorite, changeBookmarkStatus, width, height}) => {
+const BookmarkButton = ({type, id, isFavorite, changeBookmarkStatus}) => {
+  const {name, width, height} = type;
   const handleClick = () => {
     changeBookmarkStatus(id, Number(!isFavorite));
   };
@@ -35,12 +36,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 BookmarkButton.propTypes = {
-  name: propTypes.string.isRequired,
+  type: propTypes.shape({
+    name: propTypes.string.isRequired,
+    width: propTypes.number.isRequired,
+    height: propTypes.number.isRequired
+  }).isRequired,
   id: propTypes.number.isRequired,
   isFavorite: propTypes.bool.isRequired,
-  changeBookmarkStatus: propTypes.func.isRequired,
-  width: propTypes.number.isRequired,
-  height: propTypes.number.isRequired,
+  changeBookmarkStatus: propTypes.func.isRequired
 };
 
 export {BookmarkButton};

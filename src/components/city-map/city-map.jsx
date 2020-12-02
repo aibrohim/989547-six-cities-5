@@ -2,7 +2,7 @@ import React from "react";
 import leaflet from "leaflet";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-import "../../../node_modules/leaflet/dist/leaflet.css";
+import "leaflet/dist/leaflet.css";
 import {MapTypes} from "../../consts";
 
 const icon = leaflet.icon({
@@ -21,7 +21,7 @@ const toCordsArray = (location) => {
 
 const BIG_MAP_ZOOM = 13;
 
-class Map extends React.PureComponent {
+class CityMap extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -131,7 +131,7 @@ class Map extends React.PureComponent {
   }
 }
 
-Map.propTypes = {
+CityMap.propTypes = {
   offers: propTypes.array.isRequired,
   styles: propTypes.object.isRequired,
   hoveredOffer: propTypes.object,
@@ -143,5 +143,5 @@ const mapStateToProps = ({PROCESS}) => ({
   hoveredOffer: PROCESS.hoveredOffer
 });
 
-export {Map};
-export default connect(mapStateToProps)(Map);
+export {CityMap};
+export default connect(mapStateToProps)(CityMap);
