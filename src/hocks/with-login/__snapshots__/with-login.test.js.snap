@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should with login render 1`] = `
+<MockComponent
+  buttonRef={
+    Object {
+      "current": null,
+    }
+  }
+  isLogging={false}
+  loginAction={[Function]}
+  loginRef={
+    Object {
+      "current": null,
+    }
+  }
+  onSubmit={[Function]}
+  passwordRef={
+    Object {
+      "current": null,
+    }
+  }
+>
+  <React.Fragment />
+</MockComponent>
+`;

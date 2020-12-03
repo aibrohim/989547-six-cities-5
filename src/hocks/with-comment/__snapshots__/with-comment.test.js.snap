@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should with comment work with change comment sending status should render 1`] = `
+<MockComponent
+  buttonRef={
+    Object {
+      "current": null,
+    }
+  }
+  changeSendStatus={[Function]}
+  formRef={
+    Object {
+      "current": null,
+    }
+  }
+  id={0}
+  onFieldsChange={[Function]}
+  onFormSubmit={[Function]}
+  postCommentAction={[Function]}
+>
+  <React.Fragment />
+</MockComponent>
+`;
+
+exports[`Should with comment work with no change comment sending status should render 1`] = `
+<MockComponent
+  buttonRef={
+    Object {
+      "current": null,
+    }
+  }
+  formRef={
+    Object {
+      "current": null,
+    }
+  }
+  id={0}
+  onFieldsChange={[Function]}
+  onFormSubmit={[Function]}
+  postCommentAction={[Function]}
+>
+  <React.Fragment />
+</MockComponent>
+`;
